@@ -9,5 +9,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>backbone</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.pittosporum.yhcein</groupId>
+            <artifactId>pittosporum</artifactId>
+            <version>0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
