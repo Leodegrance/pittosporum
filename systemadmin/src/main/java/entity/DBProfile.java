@@ -1,9 +1,9 @@
-package pittosporum.entity;
+package entity;
 
 /**
  *
  * @author  yichen(graffitidef@gmail.com)
  */
 
-public class Properties {
+public class DBProfile {
 }
