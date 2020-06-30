@@ -1,0 +1,4 @@
+# Project exclude paths
+/application/target/
+/backbone/target/
+/systemadmin/target/
