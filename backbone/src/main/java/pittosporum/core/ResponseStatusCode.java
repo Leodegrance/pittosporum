@@ -1,7 +1,5 @@
 package pittosporum.core;
 
-import lombok.Getter;
-import lombok.Setter;
 import pittosporum.constant.ErrorCode;
 
 /**
@@ -10,20 +8,19 @@ import pittosporum.constant.ErrorCode;
  */
 
 public enum  ResponseStatusCode implements ErrorCode {
-	PROCESS_SUCCESS(0, "process_success"),
-	PROCESS_FAIL(1, "process_fail"),
-	DUPLICATION_RECORD(10001, "This record already exists in the system."),
+	PROCESS_SUCCESS("A0000","process_success"),
+	PROCESS_FAILURE("A0001","process_failure"),
 	;
 
-	private final int statusCode;
+	private final String statusCode;
 	private final String message;
 
-	ResponseStatusCode(int statusCode, String message) {
+	ResponseStatusCode(String statusCode, String message) {
 		this.statusCode = statusCode;
 		this.message = message;
 	}
 
-	public int getStatusCode() {
+	public String getStatusCode() {
 		return statusCode;
 	}
 

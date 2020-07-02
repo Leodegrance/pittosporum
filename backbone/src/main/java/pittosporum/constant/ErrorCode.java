@@ -1,11 +1,11 @@
 package pittosporum.constant;
 
 /**
- *
+ * ErrorCode Specification: {A}{0}{0}{0}{0}
  * @author  yichen(graffitidef@gmail.com)
  */
 
 public interface ErrorCode {
-    int getStatusCode();
+    String getStatusCode();
     String getMessage();
 }

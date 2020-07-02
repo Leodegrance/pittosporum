@@ -44,7 +44,7 @@ public class JsonUtil {
 
     public static <T> List<T> parseToList(String jsonStr, Class<T> clz) {
         JavaType type = mapper.getTypeFactory().constructParametricType(List.class, clz);
-        List<T> tList = null;
+        List<T> tList;
         try {
             tList = mapper.readValue(jsonStr, type);
         } catch (IOException e) {
