@@ -2,7 +2,7 @@ package pittosporum.utils;
 
 import pittosporum.core.Delete;
 import pittosporum.core.Insert;
-import pittosporum.core.SQLPriority;
+import pittosporum.core.SQLProperties;
 import pittosporum.core.Update;
 
 import java.util.PriorityQueue;
@@ -16,7 +16,7 @@ public class ExecutePriorityQueue{
 
 
     public static void main(String[] args) {
-        PriorityQueue<SQLPriority> priorityQueue = new PriorityQueue();
+        PriorityQueue<SQLProperties> priorityQueue = new PriorityQueue();
         Insert insert = new Insert();
         Update update = new Update();
         Delete delete = new Delete();
