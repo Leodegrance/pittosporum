@@ -30,6 +30,7 @@ public class AppLoader implements InitializingBean {
 
         ProfileMapper.initProfileMap(dataBaseProfiles);
 
+
         log.info("AppLoader end........");
     }
 }
