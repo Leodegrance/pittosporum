@@ -1,5 +1,8 @@
 package pittosporum.core;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 
@@ -7,6 +10,8 @@ import java.util.LinkedHashMap;
  * @author yichen(graffitidef @ gmail.com)
  */
 
+@Setter
+@Getter
 public abstract class SQLProperties implements Comparator<SQLProperties>, Comparable<SQLProperties> {
     abstract int getPriority();
 

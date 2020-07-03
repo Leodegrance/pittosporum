@@ -94,7 +94,7 @@ public class JsonUtil {
                 } else if (Date.class.isAssignableFrom(field.getType())) {
                     try {
                         method.invoke(obj, DateUtil.parseToDate((String) ent.getValue(),
-                                "yyyy-MM-dd'T'HH:mm:ss.SSSZ"));
+                                "yyyy-MM-dd HH:mm:ss"));
                     }catch (ClassCastException e){
                         method.invoke(obj, new Date((long) ent.getValue()));
                         log.error(e.getMessage());
