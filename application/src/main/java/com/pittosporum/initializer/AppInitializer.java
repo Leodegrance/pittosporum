@@ -18,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class AppLoader implements InitializingBean {
+public class AppInitializer implements InitializingBean {
     @Autowired
     @Qualifier("oRumJdbcTemplate")
     private JdbcTemplate oRumJdbcTemplate;

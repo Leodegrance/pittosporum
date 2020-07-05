@@ -1,8 +1,7 @@
-package com.pittosporum.entity;
+package pittosporum.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import pittosporum.entity.BaseEntity;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -10,8 +9,8 @@ import pittosporum.entity.BaseEntity;
 
 @Getter
 @Setter
-public class SynchronizationStore extends BaseEntity {
-    private String id;
+public class SQLStore extends BaseEntity {
+    private Integer id;
     private String executeSql;
     private String executeResult;
     private Integer profileId;

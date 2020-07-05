@@ -24,7 +24,7 @@ public final class ProfileMapper{
         }
     }
 
-    public static DataBaseProfile getDataBaseProfileByProfileId(String id){
+    public static DataBaseProfile getDataBaseProfileByProfileId(Integer id){
         if (StringUtils.isEmpty(id)){
             return null;
         }

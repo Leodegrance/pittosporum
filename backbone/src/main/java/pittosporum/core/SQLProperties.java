@@ -17,7 +17,6 @@ public abstract class SQLProperties implements Comparator<SQLProperties>, Compar
     public static final String ASCENDING    = "ASC";
     public static final String DESCENDING   = "DESC";
 
-    private String profileName;
     private String sql;
 
     private int pageNo = 1;
