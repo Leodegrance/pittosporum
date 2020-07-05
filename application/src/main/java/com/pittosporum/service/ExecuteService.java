@@ -12,5 +12,5 @@ public interface ExecuteService {
 
     ProcessResponse<Void> executeSqlByStoreId(String storeId);
 
-    void executeSqlList(List<String> storeIds);
+    ProcessResponse<Void> executeSqlList(List<String> storeIds);
 }

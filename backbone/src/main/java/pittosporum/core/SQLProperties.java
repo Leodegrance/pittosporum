@@ -14,6 +14,7 @@ import java.util.Comparator;
 public abstract class SQLProperties implements Comparator<SQLProperties>, Comparable<SQLProperties> {
     abstract int getPriority();
 
+    private Integer storeId;
     private Integer profileId;
     private String profileName;
     private String sql;

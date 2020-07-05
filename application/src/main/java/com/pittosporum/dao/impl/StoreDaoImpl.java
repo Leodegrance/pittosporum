@@ -47,12 +47,12 @@ public class StoreDaoImpl implements StoreDao {
     @Override
     public SQLStore selectSqlStoreById(String id) {
         String sql = "SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status FROM synchronization_store where id = ?";
-        List<SQLStore> sqlStoreList = oRumJdbcTemplate.queryForList(sql, SQLStore.class, id);
+        List<SQLStore> sqlStoreList = oRumJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SQLStore.class), id);
         return CommonUtil.isEmpty(sqlStoreList) ? null : sqlStoreList.get(0);
     }
 
     @Override
-    public void changeRunStatus(String id, String status) {
+    public void changeRunStatus(Integer id, String status) {
         String runCountSql = "select run_count  from synchronization_store where id = ?";
         int count = oRumJdbcTemplate.queryForObject(runCountSql, Integer.TYPE, id);
         String sql = "UPDATE synchronization_store SET execute_result = ?, run_count = ? where id = ?";

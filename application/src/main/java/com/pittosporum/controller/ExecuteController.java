@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pittosporum.core.ProcessResponse;
 
+import java.util.List;
+
 /**
  * @author yichen(graffitidef @ gmail.com)
  */
@@ -16,6 +18,12 @@ public class ExecuteController {
 
     @Autowired
     private ExecuteService executeService;
+
+    @ResponseBody
+    @PostMapping(value = "/run-sql-list-by-store-ids", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE  )
+    public ProcessResponse<Void> executeSqlList(@RequestBody List<String> storeIds){
+        return executeService.executeSqlList(storeIds);
+    }
 
     @ResponseBody
     @GetMapping(value = "/run-sql-by-store-id/{storeId}", produces = MediaType.APPLICATION_JSON_VALUE  )

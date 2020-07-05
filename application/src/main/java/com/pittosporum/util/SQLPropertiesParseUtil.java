@@ -40,15 +40,16 @@ public class SQLPropertiesParseUtil {
         }
 
         int profileId = sqlStore.getProfileId();
+        int storeId = sqlStore.getId();
         String executeSql = sqlStore.getExecuteSql();
         String dmlName = executeSql.substring(0, 6);
 
-        SQLProperties e = convertToProperties(executeSql, dmlName, profileId);
+        SQLProperties e = convertToProperties(executeSql, dmlName, profileId, storeId);
         return e;
     }
 
     //INSERT INTO world.city (ID, Name, CountryCode, District, Population) VALUES(1, 'Kabul', 'AFG', 'Kabol', 1780000);
-    private static SQLProperties convertToProperties(String executeSql, String dmlName, Integer profileId){
+    private static SQLProperties convertToProperties(String executeSql, String dmlName, Integer profileId, Integer storeId){
         SQLProperties sqlProperties = null;
         if (isDelete(dmlName)){
             sqlProperties = SQLStoreFactory.createSQLProperties(dmlName);
@@ -66,6 +67,7 @@ public class SQLPropertiesParseUtil {
             sqlProperties.setProfileId(profileId);
             sqlProperties.setProfileName(profileName);
             sqlProperties.setSql(executeSql);
+            sqlProperties.setStoreId(storeId);
             return sqlProperties;
         }
     }
