@@ -1,8 +1,8 @@
 package pittosporum.utils;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -12,7 +12,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public final class JDBCTemplateHelper {
     private JDBCTemplateHelper(){}
 
-    public static JdbcTemplate getJdbcTemplateByDataSource(DriverManagerDataSource dataSource){
+    public static JdbcTemplate getJdbcTemplateByDataSource(ComboPooledDataSource dataSource){
         log.info("current datasource ", dataSource);
         if (dataSource == null){
             return null;

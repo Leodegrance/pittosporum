@@ -14,14 +14,15 @@ import java.util.LinkedHashMap;
 @Getter
 public abstract class SQLProperties implements Comparator<SQLProperties>, Comparable<SQLProperties> {
     abstract int getPriority();
-
     public static final String ASCENDING    = "ASC";
     public static final String DESCENDING   = "DESC";
 
-    private String tableName;
+    private String profileName;
     private String sql;
-    private int pageSize;
-    private int pageNo;
+
+    private int pageNo = 1;
+    private int pageSize = 10;
+
     private LinkedHashMap<String, String> params;
     private LinkedHashMap<String, Object> filter;
 

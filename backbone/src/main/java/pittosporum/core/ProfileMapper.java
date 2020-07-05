@@ -32,8 +32,8 @@ public final class ProfileMapper{
         return profileMap.get(id);
     }
 
-    public static String getProfileNameById(String id){
-        if (StringUtils.isEmpty(id)){
+    public static String getProfileNameById(Integer id){
+        if (id == null){
             return null;
         }
 

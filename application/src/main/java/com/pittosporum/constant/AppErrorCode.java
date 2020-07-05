@@ -7,7 +7,9 @@ import pittosporum.constant.ErrorCode;
  */
 
 public enum AppErrorCode implements ErrorCode {
-    DUPLICATE_RECORD("B0001", "This record already exists in the system."),
+    PARAMS_IS_EMPTY("B0001", "params is empty when call api"),
+    DUPLICATE_RECORD("B0002", "This record already exists in the system."),
+
     ;
 
     private final String statusCode;

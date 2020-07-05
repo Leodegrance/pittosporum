@@ -4,18 +4,5 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
         <beans>
-            <bean id = "sysDataSource" name="sysDataSource" class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
-                <property name = "driverClassName" value = "com.mysql.jdbc.Driver"/>
-                <property name = "url" value = "jdbc:mysql://localhost:3306/sys?"/>
-                <property name = "username" value = "root"/>
-                <property name = "password" value = "test"/>
-            </bean>
-
-            <bean id = "oRumDataSource"  name="oRumDataSource" class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
-                <property name = "driverClassName" value = "com.mysql.jdbc.Driver"/>
-                <property name = "url" value = "jdbc:mysql://localhost:3306/orum_app?serverTimezone=Asia/Shanghai"/>
-                <property name = "username" value = "root"/>
-                <property name = "password" value = "params$11"/>
-            </bean>
         </beans>
 </beans>

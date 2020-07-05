@@ -3,6 +3,7 @@ package com.pittosporum.util;
 import com.pittosporum.entity.SynchronizationStore;
 import lombok.extern.slf4j.Slf4j;
 import pittosporum.constant.GeneralConstant;
+import pittosporum.core.ProfileMapper;
 import pittosporum.core.SQLProperties;
 import pittosporum.core.SQLStoreFactory;
 import pittosporum.utils.CommonUtil;
@@ -25,6 +26,7 @@ public class SqlParseUtil {
 
         PriorityQueue<SQLProperties> priorityQueue = new PriorityQueue<>();
         for (SynchronizationStore i : storeList){
+            int profileId = i.getProfileId();
             String executeSql = i.getExecuteSql();
             String dmlName = executeSql.substring(0, 6);
 
@@ -39,6 +41,9 @@ public class SqlParseUtil {
 
             log.info("parse sql sqlProperties ", sqlProperties);
             if (sqlProperties != null){
+                String profileName = ProfileMapper.getProfileNameById(profileId);
+                sqlProperties.setProfileName(profileName);
+                sqlProperties.setSql(executeSql);
                 priorityQueue.add(sqlProperties);
             }
         }
@@ -51,7 +56,7 @@ public class SqlParseUtil {
     }
 
     public static void main(String[] args) {
-        String sql = "INSERT INTO world.city (ID, Name, CountryCode, District, Population) VALUES(1, 'Kabul', 'AFG', 'Kabol', 1780000);";
+        String sql = "INSERT INTO city (ID, Name, CountryCode, District, Population) VALUES(1, 'Kabul', 'AFG', 'Kabol', 1780000);";
         System.out.println(sql.substring(0, 6));
         String sql1 = sql.substring(0, 6);
         System.out.println(isUpdate(sql1));
