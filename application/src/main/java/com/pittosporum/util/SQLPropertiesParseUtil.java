@@ -63,6 +63,8 @@ public class SQLPropertiesParseUtil {
             return null;
         }else {
             String profileName = ProfileMapper.getProfileNameById(profileId);
+            sqlProperties.setProfileId(profileId);
+            sqlProperties.setProfileName(profileName);
             sqlProperties.setSql(executeSql);
             return sqlProperties;
         }

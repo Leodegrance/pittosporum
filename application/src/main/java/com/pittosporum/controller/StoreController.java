@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pittosporum.core.ProcessResponse;
 import pittosporum.dto.SQLStoreDto;
 import pittosporum.utils.CommonUtil;
+import pittosporum.utils.JsonUtil;
 
 import java.util.List;
 
@@ -40,11 +41,17 @@ public class StoreController {
      * @return
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-        public ProcessResponse<Void> createStore(@RequestBody SQLStoreDto store){
+    public ProcessResponse<Void> createStore(@RequestBody SQLStoreDto store){
         if (store == null){
             ProcessResponse.failure(AppErrorCode.PARAMS_IS_EMPTY.getStatusCode(), AppErrorCode.PARAMS_IS_EMPTY.getMessage());
         }
+
         return storeService.createStore(store);
+    }
+
+    public static void main(String[] args) {
+        SQLStoreDto sqlStoreDto = new SQLStoreDto();
+        System.out.println(JsonUtil.parseToJson(sqlStoreDto));
     }
 
     /**

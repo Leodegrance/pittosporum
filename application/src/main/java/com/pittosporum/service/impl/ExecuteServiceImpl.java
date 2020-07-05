@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pittosporum.constant.Status;
 import pittosporum.core.ProcessResponse;
-import pittosporum.core.ProfileMapper;
 import pittosporum.core.SQLProperties;
 import pittosporum.entity.SQLStore;
 import pittosporum.utils.DataSourceManager;
@@ -35,22 +35,24 @@ public class ExecuteServiceImpl implements ExecuteService {
     public ProcessResponse<Void> executeSqlByStoreId(String storeId) {
         SQLStore sqlStore = dao.selectSqlStoreById(storeId);
         if (sqlStore == null){
-            log.info("====>>>>>> can not find sql ", sqlStore);
-            return ProcessResponse.failure(AppErrorCode.EMPTY_OBJECT.getStatusCode(), AppErrorCode.PARAMS_IS_EMPTY.getMessage());
+            log.info("====>>>>>> can not find sql by id", storeId);
+            return ProcessResponse.failure(AppErrorCode.EMPTY_OBJECT.getStatusCode(), AppErrorCode.EMPTY_OBJECT.getMessage());
         }
 
         try {
-            int profileId = sqlStore.getProfileId();
             SQLProperties sqlProperties = SQLPropertiesParseUtil.parseToSQLProperties(sqlStore);
             if (sqlProperties != null){
                 String exSql = sqlProperties.getSql();
-                String profileName = ProfileMapper.getProfileNameById(profileId);
+                String profileName = sqlProperties.getProfileName();
                 ComboPooledDataSource comboPooledDataSource = DataSourceManager.getDriverManagerDataSourceByName(profileName + "DataSource");
                 JdbcTemplate jdbcTemplate = JDBCTemplateHelper.getJdbcTemplateByDataSource(comboPooledDataSource);
                 jdbcTemplate.update(exSql);
+
+                dao.changeRunStatus(storeId, Status.EXECUTE_OVER);
             }
         }catch (Exception e){
             log.error("========>>>>executeSqlByStoreId>>>>>>>>>>>>>", e);
+            dao.changeRunStatus(storeId, Status.EXECUTE_FAILURE);
             return ProcessResponse.failure(AppErrorCode.EXECUTE_SQL_ERROR.getStatusCode(), AppErrorCode.EXECUTE_SQL_ERROR.getMessage());
         }
 

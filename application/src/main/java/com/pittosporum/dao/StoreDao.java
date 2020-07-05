@@ -14,4 +14,5 @@ public interface StoreDao {
     void createStore(SQLStoreDto store);
     void createStoreList(List<SQLStoreDto> stores);
     SQLStore selectSqlStoreById(String id);
+    void changeRunStatus(String id, String status);
 }
