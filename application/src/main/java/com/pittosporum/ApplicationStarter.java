@@ -6,9 +6,8 @@ import io.github.yedaxia.apidocs.DocsConfig;
 import io.github.yedaxia.apidocs.plugin.markdown.MarkdownDocPlugin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication(scanBasePackages = "com.pittosporum", exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(scanBasePackages = "com.pittosporum")
 public class ApplicationStarter {
 
     private static void initApiDocument(){

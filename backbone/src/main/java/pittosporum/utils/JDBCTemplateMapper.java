@@ -1,11 +1,13 @@
 package pittosporum.utils;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+import pittosporum.constant.PittosporumException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,26 +19,28 @@ import java.util.Map;
 public final class JDBCTemplateMapper {
     private JDBCTemplateMapper(){}
 
-    private static final String path = "datasource/dataSourceInstance.xml";
+    private static final String JDBC_BEAN_NAME_SUFFIX = "JdbcTemplate";
+    private static final String PATH = "dataSource.xml";
 
-    private static Map<String, JdbcTemplate> jdbcTemplateMap;
+    private static Map<String, JdbcTemplate> jdbcTemplateMap = new HashMap<>();
 
     public static void initJDBCTemplateMapper(List<String> list){
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(path);
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(PATH);
         if (applicationContext != null){
-
             for (String s : list){
-                JdbcTemplate jdbcTemplate = (JdbcTemplate) applicationContext.getBean(s + "JdbcTemplate");
-                jdbcTemplateMap.put(s, jdbcTemplate);
+                String beanName = s + JDBC_BEAN_NAME_SUFFIX;
+                log.error("Database is currently being initialized: " + s);
+                JdbcTemplate jdbcTemplate = (JdbcTemplate) applicationContext.getBean(s + JDBC_BEAN_NAME_SUFFIX);
+                jdbcTemplateMap.put(beanName, jdbcTemplate);
             }
         }
     }
 
-    public static JdbcTemplate getJdbcTemplateByDataSource(ComboPooledDataSource dataSource){
-        log.info("current datasource ", dataSource);
-        if (dataSource == null){
-            return null;
+    public static JdbcTemplate getJdbcTemplateByName (String name) throws PittosporumException{
+        if (StringUtils.isEmpty(name)){
+            throw new PittosporumException("can not find jdbc template by name", name);
         }
-        return new JdbcTemplate(dataSource);
+
+        return jdbcTemplateMap.get(name + JDBC_BEAN_NAME_SUFFIX);
     }
 }

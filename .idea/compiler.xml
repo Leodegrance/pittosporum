@@ -8,10 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="backbone" />
-        <module name="systemadmin" />
         <module name="application" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8" />
+    <bytecodeTargetLevel target="8">
+      <module name="systemadmin" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

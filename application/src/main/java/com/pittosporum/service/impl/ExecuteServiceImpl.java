@@ -6,6 +6,7 @@ import com.pittosporum.service.ExecuteService;
 import com.pittosporum.util.SQLPropertiesParseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pittosporum.constant.PittosporumException;
@@ -13,6 +14,7 @@ import pittosporum.constant.Status;
 import pittosporum.core.ProcessResponse;
 import pittosporum.core.SQLProperties;
 import pittosporum.entity.SQLStore;
+import pittosporum.utils.JDBCTemplateMapper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -59,9 +61,7 @@ public class ExecuteServiceImpl implements ExecuteService {
         Iterator<SQLProperties> itr = executeQueue.iterator();
         while (itr.hasNext()){
             SQLProperties e = itr.next();
-
             execute(e);
-
         }
 
         return ProcessResponse.success();
@@ -78,8 +78,8 @@ public class ExecuteServiceImpl implements ExecuteService {
             String exSql = sqlProperties.getSql();
             String profileName = sqlProperties.getProfileName();
 
-            /*JdbcTemplate jdbcTemplate = JDBCTemplateHelper.getJdbcTemplateByDataSource(comboPooledDataSource);
-            jdbcTemplate.update(exSql);*/
+            JdbcTemplate jdbcTemplate = JDBCTemplateMapper.getJdbcTemplateByName(profileName);
+            jdbcTemplate.update(exSql);
             dao.changeRunStatus(sqlProperties.getStoreId(), Status.EXECUTE_OVER);
         }catch (Exception e){
             log.error("========>>>>executeSqlByStoreId>>>>>>>>>>>>>", e);

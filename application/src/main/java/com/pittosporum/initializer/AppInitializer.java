@@ -29,7 +29,6 @@ public class AppInitializer implements InitializingBean {
         log.info("AppLoader start........");
 
         String sql = "SELECT id, profile_name, create_by, create_dt, update_by, update_dt FROM profile";
-
         List<DataBaseProfile> dataBaseProfiles = oRumJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(DataBaseProfile.class));
 
         ProfileMapper.initProfileMap(dataBaseProfiles);
