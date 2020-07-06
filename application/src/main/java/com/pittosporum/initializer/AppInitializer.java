@@ -9,8 +9,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import pittosporum.core.DataBaseProfile;
 import pittosporum.core.ProfileMapper;
+import pittosporum.utils.JDBCTemplateMapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -31,6 +33,8 @@ public class AppInitializer implements InitializingBean {
         List<DataBaseProfile> dataBaseProfiles = oRumJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(DataBaseProfile.class));
 
         ProfileMapper.initProfileMap(dataBaseProfiles);
+
+        JDBCTemplateMapper.initJDBCTemplateMapper(dataBaseProfiles.stream().map(DataBaseProfile::getProfileName).collect(Collectors.toList()));
 
         log.info("AppLoader end........");
     }

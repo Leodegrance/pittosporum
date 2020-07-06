@@ -10,5 +10,12 @@
                         <property name="user" value="root"></property>
                         <property name="password" value="params$11"></property>
                 </bean>
+
+                <bean id="worldJdbcTemplate" name="worldJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+                        <property name="dataSource" ref="worldDataSource"></property>
+                </bean>
+
+
         </beans>
+
 </beans>

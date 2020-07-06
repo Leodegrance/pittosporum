@@ -14,7 +14,6 @@ public final class DataSourceManager {
         if (applicationContext != null){
             return (ComboPooledDataSource ) applicationContext.getBean(beanName);
         }
-
         return null;
     }
 }
