@@ -13,7 +13,7 @@ import pittosporum.constant.PittosporumException;
 import pittosporum.constant.Status;
 import pittosporum.core.ProcessResponse;
 import pittosporum.core.SQLProperties;
-import pittosporum.entity.SQLStore;
+import com.pittosporum.entity.SQLStore;
 import pittosporum.utils.JDBCTemplateMapper;
 
 import java.util.ArrayList;

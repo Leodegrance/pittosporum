@@ -1,7 +1,7 @@
 package com.pittosporum.dao;
 
 import pittosporum.dto.SQLStoreDto;
-import pittosporum.entity.SQLStore;
+import com.pittosporum.entity.SQLStore;
 
 import java.util.List;
 

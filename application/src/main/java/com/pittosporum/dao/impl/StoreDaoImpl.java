@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import pittosporum.constant.Status;
 import pittosporum.dto.SQLStoreDto;
-import pittosporum.entity.SQLStore;
+import com.pittosporum.entity.SQLStore;
 import pittosporum.utils.CommonUtil;
 
 import java.util.Date;

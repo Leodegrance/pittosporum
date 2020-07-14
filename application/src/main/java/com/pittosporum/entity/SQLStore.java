@@ -1,7 +1,8 @@
-package pittosporum.entity;
+package com.pittosporum.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import pittosporum.entity.BaseEntity;
 
 /**
  * @author yichen(graffitidef @ gmail.com)

@@ -28,6 +28,6 @@ public class ExecuteController {
     @ResponseBody
     @GetMapping(value = "/run-sql-by-store-id/{storeId}", produces = MediaType.APPLICATION_JSON_VALUE  )
     public ProcessResponse<Void> executeSqlByStoreId(@PathVariable("storeId") String storeId){
-        return executeService.executeSqlByStoreId(storeId);
+          return executeService.executeSqlByStoreId(storeId);
     }
 }

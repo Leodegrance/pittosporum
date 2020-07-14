@@ -5,7 +5,7 @@ import pittosporum.constant.GeneralConstant;
 import pittosporum.core.ProfileMapper;
 import pittosporum.core.SQLProperties;
 import pittosporum.core.SQLStoreFactory;
-import pittosporum.entity.SQLStore;
+import com.pittosporum.entity.SQLStore;
 import pittosporum.utils.CommonUtil;
 
 import java.util.List;
