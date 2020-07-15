@@ -71,7 +71,7 @@ public final class ValidateHelper {
                 //example: "{msg/number}"
                 if (ERR_CODE_MAX_LENGTH.equals(errorCode) || ERR_CODE_MIN_LENGTH.equals(errorCode)){
                     msg = formatValuesMessage(vi.getMessage(),"&amp", val);
-                }else if (ERR_CODE_MAX_LENGTH.equals(errorCode) || ERR_CODE_MIN_VALUE.equals(errorCode)){
+                }else if (ERR_CODE_MAX_VALUE.equals(errorCode) || ERR_CODE_MIN_VALUE.equals(errorCode)){
                     int signIdx = val.lastIndexOf(".");
                     msg = formatValuesMessage(vi.getMessage(), "&amp", val.substring(0, signIdx));
                 }
@@ -92,7 +92,27 @@ public final class ValidateHelper {
         SQLStoreDto sqlStoreDto = new SQLStoreDto();
         sqlStoreDto.setCreateBy("aaaaaaaaa");
         sqlStoreDto.setProfileId(0);
-        ValidateHelper.validate(sqlStoreDto, null);
+        ValidateResult result = ValidateHelper.validate(sqlStoreDto, "create");
+
+        System.out.println(generateErrorStr(result.getErrorMap()));
+    }
+
+    public static String  generateErrorStr(HashMap<String, String> errorMap){
+        if (CommonUtil.isEmpty(errorMap)){
+            return "";
+        }else {
+            StringBuilder stb = new StringBuilder();
+            int i = 0;
+            for (Map.Entry<String, String> ent : errorMap.entrySet()){
+                i++;
+
+                stb.append("{").append(ent.getKey()).append("}").append(" ").append(ent.getValue());
+                if (i != errorMap.size()){
+                    stb.append(" , ");
+                }
+            }
+            return stb.toString();
+        }
     }
 
     private static String formatValuesMessage(String message, String replace, String val){

@@ -13,6 +13,7 @@ public enum AppErrorCode implements ErrorCode {
     EXECUTE_SQL_ERROR("B0004", "an error occurred while running the sql"),
     USER_NOT_EXIST("B0005", "the user  does not exist"),
     PASSWORD_ERROR("B0006", "password wrong"),
+    PARAM_ERROR("B0007", "param has error"),
     ;
 
     private final String statusCode;

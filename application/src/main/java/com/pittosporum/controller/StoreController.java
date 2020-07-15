@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pittosporum.core.ProcessResponse;
+import pittosporum.core.ValidateResult;
 import pittosporum.dto.SQLStoreDto;
 import pittosporum.utils.CommonUtil;
 import pittosporum.utils.JsonUtil;
+import pittosporum.utils.ValidateHelper;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -42,8 +45,10 @@ public class StoreController {
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ProcessResponse<Void> createStore(@RequestBody SQLStoreDto store){
-        if (store == null){
-            ProcessResponse.failure(AppErrorCode.PARAMS_IS_EMPTY.getStatusCode(), AppErrorCode.PARAMS_IS_EMPTY.getMessage());
+        ValidateResult validateResult = ValidateHelper.validate(store, "create");
+        if (validateResult.isHasError()){
+            HashMap<String, String> errorMap =  validateResult.getErrorMap();
+            return ProcessResponse.failure(AppErrorCode.PARAM_ERROR.getStatusCode(), ValidateHelper.generateErrorStr(errorMap));
         }
 
         return storeService.createStore(store);
