@@ -9,31 +9,31 @@
 
     <sql key = "receiveSqlStore" remark="">
         <![CDATA[
-            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status FROM synchronization_store
+            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status FROM store
         ]]>
     </sql>
 
     <sql key = "createStore" remark="">
         <![CDATA[
-            INSERT INTO synchronization_store (execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO store (execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ]]>
     </sql>
 
     <sql key = "selectSqlStoreById" remark="">
         <![CDATA[
-            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status FROM synchronization_store where id = ?
+            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status FROM store where id = ?
         ]]>
     </sql>
 
     <sql key = "runCountStore" remark="">
         <![CDATA[
-            select run_count  from synchronization_store where id = ?
+            select run_count  from store where id = ?
         ]]>
     </sql>
 
     <sql key = "changeRunStatus" remark="">
         <![CDATA[
-            UPDATE synchronization_store SET execute_result = ?, run_count = ? where id = ?
+            UPDATE store SET execute_result = ?, run_count = ? where id = ?
         ]]>
     </sql>
 </sqls>
