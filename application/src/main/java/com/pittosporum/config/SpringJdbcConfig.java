@@ -16,26 +16,26 @@ import java.beans.PropertyVetoException;
 @Configuration
 public class SpringJdbcConfig {
 
-    @Bean(name = "oRumAppDataSource")
-    @Qualifier("oRumAppDataSource")
-    public ComboPooledDataSource oRumAppDataSource() throws PropertyVetoException {
+    @Bean(name = "appDataSource")
+    @Qualifier("appDataSource")
+    public ComboPooledDataSource appDataSource() throws PropertyVetoException {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         dataSource.setDriverClass("com.mysql.jdbc.Driver");
-        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/orum_app?serverTimezone=Asia/Shanghai");
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/app_store?serverTimezone=Asia/Shanghai");
         dataSource.setUser("root");
         dataSource.setPassword("params$11");
         return dataSource;
     }
 
-    @Bean(name = "oRumJdbcTemplate")
-    @Qualifier("oRumJdbcTemplate")
-    JdbcTemplate oRumJdbcTemplate (@Qualifier("oRumAppDataSource") ComboPooledDataSource oRumAppDataSource){
-       return new JdbcTemplate(oRumAppDataSource);
+    @Bean(name = "appJdbcTemplate")
+    @Qualifier("appJdbcTemplate")
+    JdbcTemplate appJdbcTemplate (@Qualifier("appDataSource") ComboPooledDataSource appDataSource){
+       return new JdbcTemplate(appDataSource);
     }
 
     @Bean
-    @Qualifier("oRumTransactionManager")
-    DataSourceTransactionManager oRumTransactionManager(@Qualifier("oRumAppDataSource") ComboPooledDataSource oRumAppDataSource){
-        return new DataSourceTransactionManager(oRumAppDataSource);
+    @Qualifier("appTransactionManager")
+    DataSourceTransactionManager oRumTransactionManager(@Qualifier("appDataSource") ComboPooledDataSource appDataSource){
+        return new DataSourceTransactionManager(appDataSource);
     }
 }

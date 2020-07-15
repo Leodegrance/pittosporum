@@ -2,6 +2,7 @@ package com.pittosporum.service.impl;
 
 import com.pittosporum.constant.AppErrorCode;
 import com.pittosporum.dao.StoreDao;
+import com.pittosporum.entity.SQLStore;
 import com.pittosporum.service.ExecuteService;
 import com.pittosporum.util.SQLPropertiesParseUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -9,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pittosporum.constant.PittosporumException;
 import pittosporum.constant.Status;
 import pittosporum.core.ProcessResponse;
 import pittosporum.core.SQLProperties;
-import com.pittosporum.entity.SQLStore;
+import pittosporum.exception.BaseRunException;
 import pittosporum.utils.JDBCTemplateMapper;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 
 
 
-    private void execute(SQLProperties sqlProperties) throws PittosporumException{
+    private void execute(SQLProperties sqlProperties) throws BaseRunException {
         if (sqlProperties == null){
             return;
         }
@@ -83,6 +83,7 @@ public class ExecuteServiceImpl implements ExecuteService {
             dao.changeRunStatus(sqlProperties.getStoreId(), Status.EXECUTE_OVER);
         }catch (Exception e){
             log.error("========>>>>executeSqlByStoreId>>>>>>>>>>>>>", e);
+
             dao.changeRunStatus(sqlProperties.getStoreId(), Status.EXECUTE_FAILURE);
         }
 

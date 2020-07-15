@@ -8,7 +8,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import pittosporum.dto.SQLStoreDto;
+import pittosporum.xmlsql.XmlSQLMapper;
 
 import java.util.List;
 
@@ -19,20 +19,19 @@ import java.util.List;
 @Service
 public class UserDaoImpl implements UserDao {
     @Autowired
-    @Qualifier("oRumJdbcTemplate")
-    private JdbcTemplate oRumJdbcTemplate;
+    @Qualifier("appJdbcTemplate")
+    private JdbcTemplate appJdbcTemplate;
 
     @Override
     public User findUserById(String id) {
-        String sql = "SELECT id, name, pwd, email, mobile_number, create_by, create_dt, update_by, update_dt, status FROM user_ent where status = 'AT0001' and id = ?;";
-        return oRumJdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), id);
+        String sql = XmlSQLMapper.receiveSql("userCatalog", "findUserById");
+        return appJdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), id);
     }
 
     @Override
     public User findUserByName(String name) {
-        String sql = "SELECT id, name, pwd, email, mobile_number, create_by, create_dt, update_by, update_dt, status FROM user_ent where status = 'AT0001' and name = ?;";
-
-        List<User> list = oRumJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), name);
+        String sql = XmlSQLMapper.receiveSql("userCatalog", "findUserByName");
+        List<User> list = appJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), name);
         return DataAccessUtils.uniqueResult(list);
     }
 }

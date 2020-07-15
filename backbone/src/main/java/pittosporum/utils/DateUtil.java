@@ -2,7 +2,7 @@ package pittosporum.utils;
 
 import org.springframework.util.StringUtils;
 import pittosporum.constant.DateConstant;
-import pittosporum.constant.PittosporumException;
+import pittosporum.exception.BaseRunException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,7 +22,7 @@ public final class DateUtil {
 
     public static Date parseToDate(String val, String pattern) throws ParseException {
         if(StringUtils.isEmpty(val) || StringUtils.isEmpty(pattern)){
-            throw new PittosporumException("No has input for String to Date!");
+            throw new BaseRunException("No has input for String to Date!");
         }
 
         Date date;

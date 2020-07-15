@@ -9,7 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import pittosporum.core.DataBaseProfile;
 import pittosporum.core.ProfileMapper;
+import pittosporum.utils.CommonLoader;
 import pittosporum.utils.JDBCTemplateMapper;
+import pittosporum.xmlsql.XmlSQLMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,14 +24,17 @@ import java.util.stream.Collectors;
 @Component
 public class AppInitializer implements InitializingBean {
     @Autowired
-    @Qualifier("oRumJdbcTemplate")
-    private JdbcTemplate oRumJdbcTemplate;
+    @Qualifier("appJdbcTemplate")
+    private JdbcTemplate appJdbcTemplate;
 
     public void afterPropertiesSet() throws Exception {
         log.info("AppLoader start........");
 
-        String sql = "SELECT id, profile_name, create_by, create_dt, update_by, update_dt FROM profile";
-        List<DataBaseProfile> dataBaseProfiles = oRumJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(DataBaseProfile.class));
+        CommonLoader.loadXmlTemplateToMap();
+
+        String sql = XmlSQLMapper.receiveSql("storeCatalog", "searchProfile");
+
+        List<DataBaseProfile> dataBaseProfiles = appJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(DataBaseProfile.class));
 
         ProfileMapper.initProfileMap(dataBaseProfiles);
 

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
-import pittosporum.constant.PittosporumException;
+import pittosporum.exception.BaseRunException;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -33,35 +33,35 @@ public class JsonUtil {
         mapper = new ObjectMapper();
     }
 
-    public static String parseToJson(Object obj) {
+    public static String parseToJson(Object obj) throws BaseRunException {
         try {
             return mapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
-            throw new PittosporumException(e);
+            throw new BaseRunException(e);
         }
     }
 
-    public static <T> List<T> parseToList(String jsonStr, Class<T> clz) {
+    public static <T> List<T> parseToList(String jsonStr, Class<T> clz) throws BaseRunException {
         JavaType type = mapper.getTypeFactory().constructParametricType(List.class, clz);
         List<T> tList;
         try {
             tList = mapper.readValue(jsonStr, type);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-            throw new PittosporumException(e);
+            throw new BaseRunException(e);
         }
         return tList;
     }
 
-    public static <T> T parseToObject(String json, Class<T> clz) {
+    public static <T> T parseToObject(String json, Class<T> clz) throws BaseRunException {
         ObjectReader or = mapper.readerFor(clz);
         try {
             T obj = or.readValue(json);
             return obj;
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-            throw new PittosporumException(e);
+            throw new BaseRunException(e);
         }
     }
 
@@ -74,7 +74,7 @@ public class JsonUtil {
         return list;
     }
 
-    private static <T> T tranMapToDto(Map<String, Object> map, Class<T> cls) {
+    private static <T> T tranMapToDto(Map<String, Object> map, Class<T> cls) throws BaseRunException {
         if (cls == null || map == null || map.isEmpty()) {
             return null;
         }
@@ -112,7 +112,7 @@ public class JsonUtil {
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException
                 | NoSuchFieldException | ParseException e) {
             log.error(e.getMessage(), e);
-            throw new PittosporumException(e);
+            throw new BaseRunException(e);
         }
 
 

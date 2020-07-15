@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.StringUtils;
-import pittosporum.constant.PittosporumException;
+import pittosporum.exception.BaseRunException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,9 +36,9 @@ public final class JDBCTemplateMapper {
         }
     }
 
-    public static JdbcTemplate getJdbcTemplateByName (String name) throws PittosporumException{
+    public static JdbcTemplate getJdbcTemplateByName (String name) throws BaseRunException{
         if (StringUtils.isEmpty(name)){
-            throw new PittosporumException("can not find jdbc template by name", name);
+            throw new BaseRunException("can not find jdbc template by name", name);
         }
 
         return jdbcTemplateMap.get(name + JDBC_BEAN_NAME_SUFFIX);
