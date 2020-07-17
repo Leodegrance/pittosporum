@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import pittosporum.core.ProcessResponse;
+import pittosporum.constant.ProcessResponse;
 import pittosporum.dto.UserDto;
 import pittosporum.utils.CommonUtil;
 
@@ -22,9 +22,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ResponseBody
-    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ProcessResponse<UserDto> login(@RequestParam Map<String,Object> params){
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ProcessResponse<UserDto> login(@RequestBody Map<String,Object> params){
         if (CommonUtil.isEmpty(params)){
             return ProcessResponse.failure(AppErrorCode.PARAMS_IS_EMPTY.getStatusCode(), AppErrorCode.PARAMS_IS_EMPTY.getMessage());
         }

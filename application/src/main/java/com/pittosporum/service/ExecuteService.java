@@ -1,6 +1,6 @@
 package com.pittosporum.service;
 
-import pittosporum.core.ProcessResponse;
+import pittosporum.constant.ProcessResponse;
 
 import java.util.List;
 

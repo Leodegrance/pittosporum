@@ -1,5 +1,6 @@
 package com.pittosporum.initializer;
 
+import com.pittosporum.entity.DataBaseProfile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import pittosporum.core.DataBaseProfile;
-import pittosporum.core.ProfileMapper;
+import com.pittosporum.util.ProfileMapper;
 import pittosporum.utils.CommonLoader;
 import pittosporum.utils.JDBCTemplateMapper;
 import pittosporum.xmlsql.XmlSQLMapper;

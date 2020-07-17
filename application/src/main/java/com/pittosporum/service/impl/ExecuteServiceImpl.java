@@ -11,8 +11,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pittosporum.constant.Status;
-import pittosporum.core.ProcessResponse;
-import pittosporum.core.SQLProperties;
+import pittosporum.constant.ProcessResponse;
+import com.pittosporum.core.SQLProperties;
 import pittosporum.exception.BaseRunException;
 import pittosporum.utils.JDBCTemplateMapper;
 
@@ -67,8 +67,6 @@ public class ExecuteServiceImpl implements ExecuteService {
         return ProcessResponse.success();
     }
 
-
-
     private void execute(SQLProperties sqlProperties) throws BaseRunException {
         if (sqlProperties == null){
             return;
@@ -83,9 +81,7 @@ public class ExecuteServiceImpl implements ExecuteService {
             dao.changeRunStatus(sqlProperties.getStoreId(), Status.EXECUTE_OVER);
         }catch (Exception e){
             log.error("========>>>>executeSqlByStoreId>>>>>>>>>>>>>", e);
-
             dao.changeRunStatus(sqlProperties.getStoreId(), Status.EXECUTE_FAILURE);
         }
-
     }
 }

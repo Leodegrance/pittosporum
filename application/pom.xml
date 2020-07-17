@@ -20,7 +20,6 @@
             <artifactId>backbone</artifactId>
             <version>${revision}</version>
         </dependency>
-
     </dependencies>
 
     <build>

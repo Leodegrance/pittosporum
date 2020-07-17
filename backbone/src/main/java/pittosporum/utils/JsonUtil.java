@@ -114,8 +114,6 @@ public class JsonUtil {
             log.error(e.getMessage(), e);
             throw new BaseRunException(e);
         }
-
-
     }
 
     private static boolean isBooleanType(Class cls) {

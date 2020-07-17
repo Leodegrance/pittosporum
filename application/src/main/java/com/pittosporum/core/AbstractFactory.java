@@ -1,4 +1,4 @@
-package pittosporum.core;
+package com.pittosporum.core;
 
 /**
  * @author yichen(graffitidef @ gmail.com)

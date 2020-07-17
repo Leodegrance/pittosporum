@@ -1,11 +1,11 @@
-package pittosporum.core;
+package com.pittosporum.util;
 
+import com.pittosporum.entity.DataBaseProfile;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 /**
  * @author yichen(graffitidef @ gmail.com)
  */

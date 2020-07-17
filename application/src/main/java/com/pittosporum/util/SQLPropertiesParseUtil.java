@@ -2,9 +2,8 @@ package com.pittosporum.util;
 
 import lombok.extern.slf4j.Slf4j;
 import pittosporum.constant.GeneralConstant;
-import pittosporum.core.ProfileMapper;
-import pittosporum.core.SQLProperties;
-import pittosporum.core.SQLStoreFactory;
+import com.pittosporum.core.SQLProperties;
+import com.pittosporum.core.SQLStoreFactory;
 import com.pittosporum.entity.SQLStore;
 import pittosporum.utils.CommonUtil;
 

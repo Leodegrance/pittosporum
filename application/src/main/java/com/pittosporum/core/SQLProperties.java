@@ -1,4 +1,4 @@
-package pittosporum.core;
+package com.pittosporum.core;
 
 import lombok.Getter;
 import lombok.Setter;

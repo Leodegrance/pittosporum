@@ -1,7 +1,8 @@
-package pittosporum.core;
+package com.pittosporum.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import com.pittosporum.core.SQLProperties;
 import pittosporum.entity.BaseEntity;
 
 import java.util.List;

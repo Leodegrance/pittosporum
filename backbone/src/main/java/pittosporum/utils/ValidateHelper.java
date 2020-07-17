@@ -5,7 +5,7 @@ import net.sf.oval.Validator;
 import net.sf.oval.context.FieldContext;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import pittosporum.core.ValidateResult;
+import pittosporum.constant.ValidateResult;
 import pittosporum.dto.SQLStoreDto;
 
 import java.io.Serializable;

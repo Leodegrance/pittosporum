@@ -5,7 +5,7 @@ import com.pittosporum.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pittosporum.core.ProcessResponse;
+import pittosporum.constant.ProcessResponse;
 import pittosporum.dto.SQLStoreDto;
 
 import java.util.List;

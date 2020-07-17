@@ -6,7 +6,7 @@ import com.pittosporum.entity.User;
 import com.pittosporum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pittosporum.core.ProcessResponse;
+import pittosporum.constant.ProcessResponse;
 import pittosporum.dto.UserDto;
 
 /**

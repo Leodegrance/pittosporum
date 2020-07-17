@@ -94,6 +94,13 @@
                 <version>1.90</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-core -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>1.5.3</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

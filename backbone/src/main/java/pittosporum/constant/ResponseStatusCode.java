@@ -1,4 +1,4 @@
-package pittosporum.core;
+package pittosporum.constant;
 
 import pittosporum.constant.ErrorCode;
 

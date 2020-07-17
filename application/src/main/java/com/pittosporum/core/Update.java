@@ -1,13 +1,13 @@
-package pittosporum.core;
+package com.pittosporum.core;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
  */
 
-public class Delete extends SQLProperties{
+public class Update extends SQLProperties{
     public int getPriority() {
         return priority;
     }
 
-    private int priority = 1;
+    private int priority = 3;
 }

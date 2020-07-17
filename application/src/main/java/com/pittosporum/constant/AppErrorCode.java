@@ -14,6 +14,7 @@ public enum AppErrorCode implements ErrorCode {
     USER_NOT_EXIST("B0005", "the user  does not exist"),
     PASSWORD_ERROR("B0006", "password wrong"),
     PARAM_ERROR("B0007", "param has error"),
+    NOT_LOGIN("B0008", "not login system"),
     ;
 
     private final String statusCode;
