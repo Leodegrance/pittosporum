@@ -1,6 +1,6 @@
 package com.pittosporum.service.impl;
 
-import com.pittosporum.constant.AppErrorCode;
+import com.pittosporum.core.SQLProperties;
 import com.pittosporum.dao.StoreDao;
 import com.pittosporum.entity.SQLStore;
 import com.pittosporum.service.ExecuteService;
@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pittosporum.constant.Status;
 import pittosporum.constant.ProcessResponse;
-import com.pittosporum.core.SQLProperties;
+import pittosporum.constant.Status;
+import pittosporum.constant.app.AppErrorCode;
 import pittosporum.exception.BaseRunException;
 import pittosporum.utils.JDBCTemplateMapper;
 

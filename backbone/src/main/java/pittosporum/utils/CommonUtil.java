@@ -27,7 +27,7 @@ public class CommonUtil {
         }
     }
 
-    public static boolean instanceOf(Object instance, Class<?> owner){
+    public static boolean equalsClass(Object instance, Class<?> owner){
         if (instance == null || owner == null){
             return false;
         }
@@ -38,10 +38,5 @@ public class CommonUtil {
         }
 
         return true;
-    }
-
-    public static void main(String[] args) {
-        BaseEntity entity = new BaseEntity();
-        System.out.println(instanceOf(entity, BaseEntity.class));
     }
 }

@@ -1,4 +1,4 @@
-package com.pittosporum.constant;
+package pittosporum.constant.app;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
