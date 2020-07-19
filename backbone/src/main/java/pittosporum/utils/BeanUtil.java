@@ -135,7 +135,7 @@ public class BeanUtil{
     }
 
 
-    private static Object getObjectValue(Object instance, String methodName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private static Object getObjectValue(Object instance, String methodName) throws InvocationTargetException, IllegalAccessException {
         if (instance == null || StringUtils.isEmpty(methodName)){
             return null;
         }
