@@ -2,12 +2,12 @@ package pittosporum.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
+import pittosporum.entity.BaseEntity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -15,13 +15,28 @@ import java.util.Map;
 
 @Slf4j
 public class BeanUtil{
+
     /**
-     * convert bean properties
-     * @param instance
+     * convert bean properties to list
+     * @param list
      * @param targetCls
      * @param <T>
      * @return
      */
+
+    public static <T,E> List<T> copyPropertiesToList(List<E> list, Class<?> targetCls){
+        if (CommonUtil.isEmpty(list) || targetCls == null){
+            return Collections.EMPTY_LIST;
+        }
+
+        List<T> result = new ArrayList<>();
+        for (E t : list){
+            result.add(copyProperties(t, targetCls));
+        }
+        return result;
+    }
+
+
     public static <T> T copyProperties(Object instance, Class<?> targetCls) {
         if (instance == null || targetCls == null){
             return null;
@@ -54,8 +69,14 @@ public class BeanUtil{
                 String fieldName = entry.getKey();
                 String methodName = "set" + StringUtils.capitalize(fieldName);
                 Object val = entry.getValue();
-
                 setObjectValue(targetObj, methodName, val);
+            }
+
+            if (instance instanceof BaseEntity && targetObj instanceof BaseEntity) {
+                ((BaseEntity) targetObj).setCreateBy(((BaseEntity) instance).getCreateBy());
+                ((BaseEntity) targetObj).setCreateDt(((BaseEntity) instance).getCreateDt());
+                ((BaseEntity) targetObj).setUpdateBy(((BaseEntity) instance).getUpdateBy());
+                ((BaseEntity) targetObj).setUpdateDt(((BaseEntity) instance).getUpdateDt());
             }
 
         } catch (InstantiationException e) {

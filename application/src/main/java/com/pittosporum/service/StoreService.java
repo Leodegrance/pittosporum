@@ -15,4 +15,6 @@ public interface StoreService {
     ProcessResponse<Void> createStore(SQLStoreDto store);
 
     ProcessResponse<Void> createStoreList(List<SQLStoreDto> stores);
+
+    List<SQLStoreDto> receiveStoreData();
 }

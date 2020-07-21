@@ -10,9 +10,10 @@ import java.util.List;
  */
 
 public interface StoreDao {
-    List<SQLStoreDto>  receiveSqlStore(String profileId, String status);
+    List<SQLStore>  receiveSqlStore(String profileId, String status);
     void createStore(SQLStoreDto store);
     void createStoreList(List<SQLStoreDto> stores);
     SQLStore selectSqlStoreById(String id);
     void changeRunStatus(Integer id, String status);
+    List<SQLStore> receiveStoreData();
 }

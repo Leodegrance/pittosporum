@@ -26,9 +26,9 @@ public class StoreDaoImpl implements StoreDao {
     private JdbcTemplate appJdbcTemplate;
 
     @Override
-    public List<SQLStoreDto> receiveSqlStore(String profileId, String status) {
+    public List<SQLStore> receiveSqlStore(String profileId, String status) {
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "receiveSqlStore");
-        return appJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SQLStoreDto.class));
+        return appJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SQLStore.class));
     }
 
     @Override
@@ -58,5 +58,11 @@ public class StoreDaoImpl implements StoreDao {
         int count = appJdbcTemplate.queryForObject(runCountSql, Integer.TYPE, id);
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "changeRunStatus");
         appJdbcTemplate.update(sql,new Object[]{status, count + 1, id});
+    }
+
+    @Override
+    public List<SQLStore> receiveStoreData() {
+        String sql = XmlSQLMapper.receiveSql("storeCatalog", "receiveSqlStore");
+        return appJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SQLStore.class));
     }
 }

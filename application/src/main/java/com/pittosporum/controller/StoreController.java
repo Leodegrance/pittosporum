@@ -1,6 +1,5 @@
 package com.pittosporum.controller;
 
-import com.pittosporum.entity.SQLStore;
 import com.pittosporum.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -9,7 +8,6 @@ import pittosporum.constant.ProcessResponse;
 import pittosporum.constant.ValidateResult;
 import pittosporum.constant.app.AppErrorCode;
 import pittosporum.dto.SQLStoreDto;
-import pittosporum.utils.BeanUtil;
 import pittosporum.utils.CommonUtil;
 import pittosporum.utils.ValidateHelper;
 
@@ -55,17 +53,10 @@ public class StoreController {
         return storeService.createStore(store);
     }
 
-    public static void main(String[] args) {
-        SQLStoreDto sqlStoreDto = new SQLStoreDto();
-        sqlStoreDto.setProfileId(111);
-        sqlStoreDto.setId(222);
-        sqlStoreDto.setCreateBy("test");
-        sqlStoreDto.setExecuteResult("aaaaa");
-        sqlStoreDto.setExecuteSql("aaaaa");
-
-        SQLStore sqlStore = BeanUtil.copyProperties(sqlStoreDto, SQLStore.class);
-
-        System.out.println(sqlStore);
+    @ResponseBody
+    @GetMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<SQLStoreDto> receiveStoreData(){
+        return storeService.receiveStoreData();
     }
 
     /**
