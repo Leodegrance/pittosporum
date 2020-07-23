@@ -1,6 +1,7 @@
 package com.pittosporum.service;
 
 import pittosporum.constant.ProcessResponse;
+import pittosporum.dto.DataBaseProfileDto;
 import pittosporum.dto.SQLStoreDto;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface StoreService {
 
     ProcessResponse<Void> createStore(SQLStoreDto store);
 
-    ProcessResponse<Void> createStoreList(List<SQLStoreDto> stores);
-
     List<SQLStoreDto> receiveStoreData();
+
+    List<DataBaseProfileDto> receiveDataBaseProfile();
 }

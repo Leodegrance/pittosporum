@@ -9,7 +9,8 @@
 
     <sql key = "receiveSqlStore" remark="">
         <![CDATA[
-            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status FROM store
+            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status, run_count FROM store
+
         ]]>
     </sql>
 

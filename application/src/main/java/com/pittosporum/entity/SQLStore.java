@@ -15,4 +15,6 @@ public class SQLStore extends BaseEntity {
     private String executeSql;
     private String executeResult;
     private Integer profileId;
+    private String status;
+    private Integer runCount;
 }

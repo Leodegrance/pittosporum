@@ -10,7 +10,7 @@ public enum AppErrorCode implements ErrorCode {
     PARAMS_IS_EMPTY("B0001", "params is empty when call api"),
     DUPLICATE_RECORD("B0002", "This record already exists in the system."),
     EMPTY_OBJECT("B0003", "empty object"),
-    EXECUTE_SQL_ERROR("B0004", "an error occurred while running the sql"),
+    FORMAT_SQL_ERROR("B0004", "an error occurred while format the sql"),
     USER_NOT_EXIST("B0005", "the user  does not exist"),
     PASSWORD_ERROR("B0006", "password wrong"),
     PARAM_ERROR("B0007", "param has error"),

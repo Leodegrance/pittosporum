@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import pittosporum.constant.Status;
-import pittosporum.dto.SQLStoreDto;
 import pittosporum.utils.CommonUtil;
 import pittosporum.xmlsql.XmlSQLMapper;
 
@@ -32,17 +31,9 @@ public class StoreDaoImpl implements StoreDao {
     }
 
     @Override
-    public void createStore(SQLStoreDto store) {
-        String sql = XmlSQLMapper.receiveSql("storeCatalog", "insertSynchronizationStore");
-        appJdbcTemplate.update(sql, new Object[] {store.getExecuteSql(), store.getExecuteResult(), store.getProfileId(), "graffitidef", new Date(), "graffitidef", new Date(), Status.ACTIVE_RECORD});
-    }
-
-    @Override
-    public void createStoreList(List<SQLStoreDto> stores) {
-       String sql = XmlSQLMapper.receiveSql("storeCatalog", "createStore");
-       for (SQLStoreDto store : stores){
-           appJdbcTemplate.update(sql, new Object[] {store.getExecuteSql(), store.getExecuteResult(), store.getProfileId(), "graffitidef", new Date(), "graffitidef", new Date(), Status.ACTIVE_RECORD});
-       }
+    public void createStore(SQLStore store) {
+        String sql = XmlSQLMapper.receiveSql("storeCatalog", "createStore");
+        appJdbcTemplate.update(sql, new Object[] {store.getExecuteSql(), Status.PENDING_EXECUTE, store.getProfileId(), "graffitidef", new Date(), "graffitidef", new Date(), Status.ACTIVE_RECORD});
     }
 
     @Override

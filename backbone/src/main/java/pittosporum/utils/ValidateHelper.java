@@ -73,7 +73,7 @@ public final class ValidateHelper {
                     msg = formatValuesMessage(vi.getMessage(),"&amp", val);
                 }else if (ERR_CODE_MAX_VALUE.equals(errorCode) || ERR_CODE_MIN_VALUE.equals(errorCode)){
                     int signIdx = val.lastIndexOf(".");
-                    msg = formatValuesMessage(vi.getMessage(), "&amp", val.substring(0, signIdx));
+                    msg = formatValuesMessage(vi.getMessage(), "&amp", val.substring(0, signIdx + 1));
                 }
             }else {
                 msg = vi.getMessage();
@@ -94,10 +94,10 @@ public final class ValidateHelper {
         sqlStoreDto.setProfileId(0);
         ValidateResult result = ValidateHelper.validate(sqlStoreDto, "create");
 
-        System.out.println(generateErrorStr(result.getErrorMap()));
+        System.out.println(buildHTMLErrorStr(result.getErrorMap()));
     }
 
-    public static String  generateErrorStr(HashMap<String, String> errorMap){
+    public static String buildHTMLErrorStr(HashMap<String, String> errorMap){
         if (CommonUtil.isEmpty(errorMap)){
             return "";
         }else {
@@ -108,7 +108,7 @@ public final class ValidateHelper {
 
                 stb.append("{").append(ent.getKey()).append("}").append(" ").append(ent.getValue());
                 if (i != errorMap.size()){
-                    stb.append(" , ");
+                    stb.append(" , <br> ");
                 }
             }
             return stb.toString();

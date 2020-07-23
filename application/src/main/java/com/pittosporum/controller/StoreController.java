@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import pittosporum.constant.ProcessResponse;
 import pittosporum.constant.ValidateResult;
 import pittosporum.constant.app.AppErrorCode;
+import pittosporum.dto.DataBaseProfileDto;
 import pittosporum.dto.SQLStoreDto;
-import pittosporum.utils.CommonUtil;
 import pittosporum.utils.ValidateHelper;
 
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public class StoreController {
         ValidateResult validateResult = ValidateHelper.validate(store, "create");
         if (validateResult.isHasError()){
             HashMap<String, String> errorMap =  validateResult.getErrorMap();
-            return ProcessResponse.failure(AppErrorCode.PARAM_ERROR.getStatusCode(), ValidateHelper.generateErrorStr(errorMap));
+            return ProcessResponse.failure(AppErrorCode.PARAM_ERROR.getStatusCode(), ValidateHelper.buildHTMLErrorStr(errorMap));
         }
 
         return storeService.createStore(store);
@@ -59,16 +59,9 @@ public class StoreController {
         return storeService.receiveStoreData();
     }
 
-    /**
-     *
-     * @param stores
-     * @return
-     */
-    @PostMapping(value = "list", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ProcessResponse<Void> createStoreList(@RequestBody List<SQLStoreDto> stores){
-        if (CommonUtil.isEmpty(stores)){
-            ProcessResponse.failure(AppErrorCode.PARAMS_IS_EMPTY.getStatusCode(), AppErrorCode.PARAMS_IS_EMPTY.getMessage());
-        }
-        return storeService.createStoreList(stores);
+    @ResponseBody
+    @GetMapping(value = "profile-list", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<DataBaseProfileDto> receiveDataBaseProfile(){
+        return storeService.receiveDataBaseProfile();
     }
 }

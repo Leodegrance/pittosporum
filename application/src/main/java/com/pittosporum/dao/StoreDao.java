@@ -1,6 +1,5 @@
 package com.pittosporum.dao;
 
-import pittosporum.dto.SQLStoreDto;
 import com.pittosporum.entity.SQLStore;
 
 import java.util.List;
@@ -11,8 +10,7 @@ import java.util.List;
 
 public interface StoreDao {
     List<SQLStore>  receiveSqlStore(String profileId, String status);
-    void createStore(SQLStoreDto store);
-    void createStoreList(List<SQLStoreDto> stores);
+    void createStore(SQLStore store);
     SQLStore selectSqlStoreById(String id);
     void changeRunStatus(Integer id, String status);
     List<SQLStore> receiveStoreData();
