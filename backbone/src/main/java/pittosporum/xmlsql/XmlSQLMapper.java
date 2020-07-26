@@ -1,5 +1,6 @@
 package pittosporum.xmlsql;
 
+import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Slf4j
 public final class XmlSQLMapper {
-    @Setter
+    @Setter@Getter
     private static LinkedHashMap<String, List<XmlSQLTemplate>> catalogMap;
 
     public static String receiveSql(String catalogStr, String key){

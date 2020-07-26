@@ -1,10 +1,10 @@
 package com.pittosporum.util;
 
-import lombok.extern.slf4j.Slf4j;
-import pittosporum.constant.GeneralConstant;
 import com.pittosporum.core.SQLProperties;
 import com.pittosporum.core.SQLStoreFactory;
 import com.pittosporum.entity.SQLStore;
+import lombok.extern.slf4j.Slf4j;
+import pittosporum.constant.GeneralConstant;
 import pittosporum.utils.CommonUtil;
 
 import java.util.List;
@@ -47,7 +47,6 @@ public class SQLPropertiesParseUtil {
         return e;
     }
 
-    //INSERT INTO world.city (ID, Name, CountryCode, District, Population) VALUES(1, 'Kabul', 'AFG', 'Kabol', 1780000);
     private static SQLProperties convertToProperties(String executeSql, String dmlName, Integer profileId, Integer storeId){
         SQLProperties sqlProperties = null;
         if (isDelete(dmlName)){

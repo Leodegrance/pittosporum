@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sqls catalog="storeCatalog">
-    <sql key = "searchProfile" remark="">
+    <sql key = "searchProfile" dmlType = "select" remark="">
         <![CDATA[
             SELECT id, profile_name, create_by, create_dt, update_by, update_dt FROM profile
         ]]>
     </sql>
 
-
-    <sql key = "receiveSqlStore" remark="">
+    <sql key = "receiveSqlStore" dmlType = "select" remark="">
         <![CDATA[
-            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status, run_count FROM store
-
+            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status, run_count
+            FROM store
         ]]>
     </sql>
 
-    <sql key = "createStore" remark="">
+    <sql key = "createStore" dmlType = "insert" remark="">
         <![CDATA[
-            INSERT INTO store (execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO store (execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ]]>
     </sql>
 
-    <sql key = "selectSqlStoreById" remark="">
+    <sql key = "selectSqlStoreById" dmlType = "select" remark="">
         <![CDATA[
             SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status FROM store where id = ?
         ]]>
     </sql>
 
-    <sql key = "runCountStore" remark="">
+    <sql key = "runCountStore" dmlType = "select" remark="">
         <![CDATA[
             select run_count  from store where id = ?
+            <#if id??> id = ?</#if>
         ]]>
     </sql>
 
-    <sql key = "changeRunStatus" remark="">
+    <sql key = "changeRunStatus" dmlType = "update" remark="">
         <![CDATA[
             UPDATE store SET execute_result = ?, run_count = ? where id = ?
         ]]>
