@@ -9,6 +9,9 @@ import pittosporum.constant.ValidateResult;
 import pittosporum.constant.app.AppErrorCode;
 import pittosporum.dto.DataBaseProfileDto;
 import pittosporum.dto.SQLStoreDto;
+import pittosporum.dto.view.QueryParam;
+import pittosporum.dto.view.QueryResult;
+import pittosporum.dto.view.SQLStoreQueryDto;
 import pittosporum.utils.ValidateHelper;
 
 import java.util.HashMap;
@@ -53,10 +56,15 @@ public class StoreController {
         return storeService.createStore(store);
     }
 
+    /**
+     *
+     * @param queryParam
+     * @return
+     */
     @ResponseBody
-    @GetMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<SQLStoreDto> receiveStoreData(){
-        return storeService.receiveStoreData();
+    @PostMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public QueryResult<SQLStoreQueryDto> receiveStoreData(@RequestBody QueryParam queryParam){
+        return storeService.receiveStoreData(queryParam);
     }
 
     @ResponseBody

@@ -1,4 +1,4 @@
-package pittosporum.utils.dml;
+package pittosporum.dto.view;
 
 import lombok.Getter;
 import lombok.Setter;

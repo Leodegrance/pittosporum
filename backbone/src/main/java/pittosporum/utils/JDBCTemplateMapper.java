@@ -31,6 +31,10 @@ public final class JDBCTemplateMapper {
                 String beanName = s + JDBC_BEAN_NAME_SUFFIX;
                 log.error("Database is currently being initialized: " + s);
                 JdbcTemplate jdbcTemplate = (JdbcTemplate) applicationContext.getBean(s + JDBC_BEAN_NAME_SUFFIX);
+
+                //call test
+                //jdbcTemplate.query("SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status, run_count FROM store WHERE id=10025;", new BeanPropertyRowMapper<>(SQLStoreDto.class));
+
                 jdbcTemplateMap.put(beanName, jdbcTemplate);
             }
         }

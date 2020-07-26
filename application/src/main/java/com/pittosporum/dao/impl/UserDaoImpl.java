@@ -3,7 +3,6 @@ package com.pittosporum.dao.impl;
 import com.pittosporum.dao.UserDao;
 import com.pittosporum.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,19 +18,18 @@ import java.util.List;
 @Service
 public class UserDaoImpl implements UserDao {
     @Autowired
-    @Qualifier("appJdbcTemplate")
-    private JdbcTemplate appJdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public User findUserById(String id) {
         String sql = XmlSQLMapper.receiveSql("userCatalog", "findUserById");
-        return appJdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), id);
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), id);
     }
 
     @Override
     public User findUserByName(String name) {
         String sql = XmlSQLMapper.receiveSql("userCatalog", "findUserByName");
-        List<User> list = appJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), name);
+        List<User> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), name);
         return DataAccessUtils.uniqueResult(list);
     }
 }

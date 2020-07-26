@@ -7,7 +7,7 @@ import io.github.yedaxia.apidocs.plugin.markdown.MarkdownDocPlugin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.pittosporum")
+@SpringBootApplication(scanBasePackages = {"com.pittosporum", "com.pittosporum.dao"} )
 public class ApplicationStarter {
 
     private static void initApiDocument(){

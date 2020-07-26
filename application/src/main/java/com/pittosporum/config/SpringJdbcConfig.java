@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import pittosporum.dao.QueryDao;
 
 import java.beans.PropertyVetoException;
 
@@ -15,6 +16,12 @@ import java.beans.PropertyVetoException;
 
 @Configuration
 public class SpringJdbcConfig {
+
+
+    @Bean
+    public QueryDao queryDao(){
+        return new QueryDao();
+    }
 
     @Bean(name = "appDataSource")
     @Qualifier("appDataSource")

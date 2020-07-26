@@ -12,11 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pittosporum.constant.ProcessResponse;
 import pittosporum.constant.app.AppErrorCode;
+import pittosporum.dao.QueryDao;
 import pittosporum.dto.DataBaseProfileDto;
 import pittosporum.dto.SQLStoreDto;
+import pittosporum.dto.view.QueryParam;
+import pittosporum.dto.view.QueryResult;
+import pittosporum.dto.view.SQLStoreQueryDto;
 import pittosporum.utils.BeanUtil;
 import pittosporum.utils.CommonUtil;
 import pittosporum.utils.SQLValidator;
+import pittosporum.xmlsql.XmlSQLMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +36,9 @@ import java.util.Map;
 public class StoreServiceImpl implements StoreService {
     @Autowired
     private StoreDao storeDao;
+
+    @Autowired
+    private QueryDao queryDao;
 
     @Override
     public List<SQLStoreDto> receiveSqlStore(String profileId, String status) {
@@ -69,9 +77,12 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<SQLStoreDto> receiveStoreData() {
-        List<SQLStore> list = storeDao.receiveStoreData();
-        return BeanUtil.copyPropertiesToList(list, SQLStoreDto.class);
+    public QueryResult<SQLStoreQueryDto> receiveStoreData(QueryParam queryParam) {
+        String sql = XmlSQLMapper.receiveSql("storeCatalog", "receiveSqlStore");
+        queryParam.setEntityClz(SQLStoreQueryDto.class);
+        queryParam.setMainSql(sql);
+
+        return queryDao.query(queryParam);
     }
 
     @Override
