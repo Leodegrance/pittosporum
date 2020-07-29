@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls catalog="quartzCatalog">
+    <sql key = "createQuartz" dmlType = "insert" remark="">
+        <![CDATA[
+            insert into quartz_deteail (job_name, job_group, start_time, cron_exp, invoke_param, status) values (?, ?, ?, ?, ?, ?)
+        ]]>
+    </sql>
+
+    <sql key = "receiveAll" dmlType = "select" remark="">
+        <![CDATA[
+            select id, job_name, job_group, start_time, cron_exp, invoke_param, status from quartz_deteail
+        ]]>
+    </sql>
+</sqls>
+
+

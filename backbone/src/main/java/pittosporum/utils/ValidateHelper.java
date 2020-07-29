@@ -5,6 +5,7 @@ import net.sf.oval.Validator;
 import net.sf.oval.context.FieldContext;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import pittosporum.annotation.DisplayName;
 import pittosporum.constant.ValidateResult;
 import pittosporum.dto.SQLStoreDto;
 
@@ -56,9 +57,17 @@ public final class ValidateHelper {
 
             Field field = fieldContext.getField();
 
+            String fieldName;
+            DisplayName displayName = field.getAnnotation(DisplayName.class);
+            if (displayName != null){
+                fieldName = displayName.value();
+            }else {
+                fieldName = field.getName();
+            }
+
             Assert.notNull(fieldContext, "ValidateResult field is null");
 
-            String fieldName = field.getName();
+
 
             String msg = "";
             String errorCode = vi.getErrorCode();
@@ -106,9 +115,10 @@ public final class ValidateHelper {
             for (Map.Entry<String, String> ent : errorMap.entrySet()){
                 i++;
 
-                stb.append("{").append(ent.getKey()).append("}").append(" ").append(ent.getValue());
+                stb.append(ent.getKey()).append(" ").append(ent.getValue());
+                //stb.append("{").append(ent.getKey()).append("}").append(" ").append(ent.getValue());
                 if (i != errorMap.size()){
-                    stb.append(" , <br> ");
+                    stb.append("<br>");
                 }
             }
             return stb.toString();

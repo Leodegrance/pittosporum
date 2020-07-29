@@ -51,3 +51,14 @@ CREATE TABLE `user_ent` (
   `status` char(10) NOT NULL DEFAULT 'AT0001',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+create table app_store.quartz_deteail(
+	id bigint(20) unsigned primary key NOT NULL AUTO_INCREMENT COMMENT 'primary_key',
+	job_name varchar(25) not null COMMENT 'job name',
+	job_group varchar(25) not null  COMMENT 'job group',
+	start_time varchar(20)  COMMENT 'start time',
+	cron_exp varchar(15) not null COMMENT 'cron schedule',
+	invoke_param varchar(50)  COMMENT 'invoke param',
+	status char(10) not null default 'AT0001'
+)ENGINE=InnoDB auto_increment = 10000;
