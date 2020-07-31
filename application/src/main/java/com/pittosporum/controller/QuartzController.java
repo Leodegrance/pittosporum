@@ -42,13 +42,13 @@ public class QuartzController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/run/{id}/quartz", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProcessResponse<Void> runJob(@PathVariable("id") Integer id){
+    @GetMapping(value = "/start/{id}/quartz", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProcessResponse<Void> startJob(@PathVariable("id") Integer id){
         if (id == null){
             return ProcessResponse.failure(AppErrorCode.PARAM_ERROR.getStatusCode(), AppErrorCode.PARAM_ERROR.getMessage());
         }
 
-        return quartzService.runJob(id);
+        return quartzService.startJob(id);
     }
 
     @ResponseBody
