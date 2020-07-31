@@ -1,20 +1,19 @@
 package com.pittosporum.service.impl;
 
+import com.pittosporum.constant.ProcessResponse;
+import com.pittosporum.constant.Status;
+import com.pittosporum.constant.app.AppErrorCode;
 import com.pittosporum.core.SQLProperties;
 import com.pittosporum.dao.StoreDao;
 import com.pittosporum.entity.SQLStore;
 import com.pittosporum.service.ExecuteService;
 import com.pittosporum.util.SQLPropertiesParseUtil;
+import com.pittosporum.utils.JDBCTemplateMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.pittosporum.constant.ProcessResponse;
-import com.pittosporum.constant.Status;
-import com.pittosporum.constant.app.AppErrorCode;
-import com.pittosporum.exception.BaseRunException;
-import com.pittosporum.utils.JDBCTemplateMapper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,7 +33,7 @@ public class ExecuteServiceImpl implements ExecuteService {
 
     @Override
     @Transactional
-    public ProcessResponse<Void> executeSqlByStoreId(String storeId) {
+    public ProcessResponse<Void> executeSqlByStoreId(Integer storeId) {
         SQLStore sqlStore = dao.selectSqlStoreById(storeId);
         if (sqlStore == null){
             log.info("====>>>>>> can not find sql by id", storeId);
@@ -47,9 +46,9 @@ public class ExecuteServiceImpl implements ExecuteService {
     }
 
     @Override
-    public ProcessResponse<Void> executeSqlList(List<String> storeIds) {
+    public ProcessResponse<Void> executeSqlList(List<Integer> storeIds) {
         List<SQLStore> sqlStoreList = new ArrayList<>();
-        for (String s : storeIds){
+        for (Integer s : storeIds){
             SQLStore e = dao.selectSqlStoreById(s);
             if (e != null){
                 sqlStoreList.add(e);
@@ -67,7 +66,7 @@ public class ExecuteServiceImpl implements ExecuteService {
         return ProcessResponse.success();
     }
 
-    private void execute(SQLProperties sqlProperties) throws BaseRunException {
+    private void execute(SQLProperties sqlProperties){
         if (sqlProperties == null){
             return;
         }

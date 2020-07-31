@@ -1,14 +1,14 @@
 package com.pittosporum.dao.impl;
 
+import com.pittosporum.constant.Status;
 import com.pittosporum.dao.StoreDao;
 import com.pittosporum.entity.SQLStore;
+import com.pittosporum.utils.CommonUtil;
+import com.pittosporum.xmlsql.XmlSQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import com.pittosporum.constant.Status;
-import com.pittosporum.utils.CommonUtil;
-import com.pittosporum.xmlsql.XmlSQLMapper;
 
 import java.util.Date;
 import java.util.List;
@@ -23,7 +23,7 @@ public class StoreDaoImpl implements StoreDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<SQLStore> receiveSqlStore(String profileId, String status) {
+    public List<SQLStore> receiveSqlStore(Integer profileId, String status) {
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "receiveSqlStore");
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SQLStore.class));
     }
@@ -35,7 +35,7 @@ public class StoreDaoImpl implements StoreDao {
     }
 
     @Override
-    public SQLStore selectSqlStoreById(String id) {
+    public SQLStore selectSqlStoreById(Integer id) {
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "selectSqlStoreById");
         List<SQLStore> sqlStoreList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SQLStore.class), id);
         return CommonUtil.isEmpty(sqlStoreList) ? null : sqlStoreList.get(0);

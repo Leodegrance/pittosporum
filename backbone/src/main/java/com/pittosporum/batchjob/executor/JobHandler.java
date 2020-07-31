@@ -1,4 +1,4 @@
-package com.pittosporum.batchjob;
+package com.pittosporum.batchjob.executor;
 
 import org.quartz.Job;
 

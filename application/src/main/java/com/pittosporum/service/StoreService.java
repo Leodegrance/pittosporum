@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public interface StoreService {
-    List<SQLStoreDto> receiveSqlStore(String profileId, String status);
+    List<SQLStoreDto> receiveSqlStore(Integer profileId, String status);
 
     ProcessResponse<Void> createStore(SQLStoreDto store);
 

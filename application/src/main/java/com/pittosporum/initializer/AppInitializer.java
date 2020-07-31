@@ -1,6 +1,6 @@
 package com.pittosporum.initializer;
 
-import com.pittosporum.batchjob.core.JobHandlerMapper;
+import com.pittosporum.batchjob.JobHandlerMapper;
 import com.pittosporum.entity.DataBaseProfile;
 import com.pittosporum.util.ProfileMapper;
 import com.pittosporum.utils.CommonLoader;

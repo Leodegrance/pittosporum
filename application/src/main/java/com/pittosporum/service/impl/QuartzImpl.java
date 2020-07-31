@@ -1,6 +1,6 @@
 package com.pittosporum.service.impl;
 
-import com.pittosporum.batchjob.core.JobHandlerMapper;
+import com.pittosporum.batchjob.JobHandlerMapper;
 import com.pittosporum.constant.ProcessResponse;
 import com.pittosporum.constant.app.AppErrorCode;
 import com.pittosporum.dao.QuartzDao;

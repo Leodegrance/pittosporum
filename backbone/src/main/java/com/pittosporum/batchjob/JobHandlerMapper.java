@@ -1,6 +1,5 @@
-package com.pittosporum.batchjob.core;
+package com.pittosporum.batchjob;
 
-import com.pittosporum.batchjob.JobDelegator;
 import com.pittosporum.exception.BaseRunException;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +30,7 @@ public class JobHandlerMapper {
             return;
         }
 
-        log.info("current Thread:"+Thread.currentThread().getName());
+        log.info("current Thread:" + Thread.currentThread().getName());
         for (File file : javaFileArray){
             Class<?> clz = convertFileToClass(file);
             if (isJobHandler(clz)){
@@ -71,7 +70,6 @@ public class JobHandlerMapper {
     }
 
     public static Class<?> getClassByName(String name){
-        log.info("当前线程:"+Thread.currentThread().getName());
         if (StringUtils.isEmpty(name)){
             return null;
         }

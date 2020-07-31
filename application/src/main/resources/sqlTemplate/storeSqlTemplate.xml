@@ -29,7 +29,6 @@
     <sql key = "runCountStore" dmlType = "select" remark="">
         <![CDATA[
             select run_count  from store where id = ?
-            <#if id??> id = ?</#if>
         ]]>
     </sql>
 

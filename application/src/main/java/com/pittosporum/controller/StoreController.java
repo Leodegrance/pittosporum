@@ -1,9 +1,5 @@
 package com.pittosporum.controller;
 
-import com.pittosporum.service.StoreService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
 import com.pittosporum.constant.ProcessResponse;
 import com.pittosporum.constant.ValidateResult;
 import com.pittosporum.constant.app.AppErrorCode;
@@ -12,7 +8,11 @@ import com.pittosporum.dto.SQLStoreDto;
 import com.pittosporum.dto.view.QueryParam;
 import com.pittosporum.dto.view.QueryResult;
 import com.pittosporum.dto.view.SQLStoreQueryDto;
+import com.pittosporum.service.StoreService;
 import com.pittosporum.utils.ValidateHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +36,7 @@ public class StoreController {
      */
     @ResponseBody
     @GetMapping(value = "/profile/{profileId}/store/{status}", produces = MediaType.APPLICATION_JSON_VALUE  )
-    public List<SQLStoreDto> receiveSqlStore(@PathVariable("profileId") String profileId, @PathVariable("status") String status){
+    public List<SQLStoreDto> receiveSqlStore(@PathVariable("profileId") Integer profileId, @PathVariable("status") String status){
         return storeService.receiveSqlStore(profileId, status);
     }
 

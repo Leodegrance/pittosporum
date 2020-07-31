@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ExecuteService {
 
-    ProcessResponse<Void> executeSqlByStoreId(String storeId);
+    ProcessResponse<Void> executeSqlByStoreId(Integer storeId);
 
-    ProcessResponse<Void> executeSqlList(List<String> storeIds);
+    ProcessResponse<Void> executeSqlList(List<Integer> storeIds);
 }

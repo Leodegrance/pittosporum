@@ -41,7 +41,7 @@ public class StoreServiceImpl implements StoreService {
     private QueryDao queryDao;
 
     @Override
-    public List<SQLStoreDto> receiveSqlStore(String profileId, String status) {
+    public List<SQLStoreDto> receiveSqlStore(Integer profileId, String status) {
         List<SQLStoreDto> result = new ArrayList<>();
         List<SQLStore> list = storeDao.receiveSqlStore(profileId, status);
         for (SQLStore i : list){
