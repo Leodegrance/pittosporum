@@ -1,9 +1,5 @@
 package com.pittosporum.controller;
 
-import com.pittosporum.service.QuartzService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
 import com.pittosporum.constant.ProcessResponse;
 import com.pittosporum.constant.ValidateResult;
 import com.pittosporum.constant.app.AppErrorCode;
@@ -11,7 +7,11 @@ import com.pittosporum.dto.QuartzDto;
 import com.pittosporum.dto.view.QuartzQueryDto;
 import com.pittosporum.dto.view.QueryParam;
 import com.pittosporum.dto.view.QueryResult;
+import com.pittosporum.service.QuartzService;
 import com.pittosporum.utils.ValidateHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -42,9 +42,29 @@ public class QuartzController {
     }
 
     @ResponseBody
+    @GetMapping(value = "/run/{id}/quartz", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProcessResponse<Void> runJob(@PathVariable("id") Integer id){
+        if (id == null){
+            return ProcessResponse.failure(AppErrorCode.PARAM_ERROR.getStatusCode(), AppErrorCode.PARAM_ERROR.getMessage());
+        }
+
+        return quartzService.runJob(id);
+    }
+
+    @ResponseBody
     @PostMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
     public QueryResult<QuartzQueryDto> receiveJobList(@RequestBody QueryParam queryParam){
         return quartzService.receiveJobList(queryParam);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/{id}/quartz", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProcessResponse<QuartzDto> getQuartzById(@PathVariable("id") Integer id){
+        if (id == null){
+            return ProcessResponse.failure(AppErrorCode.PARAM_ERROR.getStatusCode(), AppErrorCode.PARAM_ERROR.getMessage());
+        }
+
+        return quartzService.getQuartzById(id);
     }
 }
 

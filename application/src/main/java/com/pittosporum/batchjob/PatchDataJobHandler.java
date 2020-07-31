@@ -1,4 +1,4 @@
-package com.pittosporum.scheduler;
+package com.pittosporum.batchjob;
 
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;

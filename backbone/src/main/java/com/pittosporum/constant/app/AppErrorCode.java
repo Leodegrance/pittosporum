@@ -15,6 +15,8 @@ public enum AppErrorCode implements ErrorCode {
     PASSWORD_ERROR("B0006", "password wrong"),
     PARAM_ERROR("B0007", "param has error"),
     NOT_LOGIN("B0008", "not login system"),
+    RUN_JOB_FAILURE("B0009", "run job failure, because can not find job by id"),
+    RUN_JOB_FAILURE_2("B0010", "run job failure, encountered an error"),
     ;
 
     private final String statusCode;

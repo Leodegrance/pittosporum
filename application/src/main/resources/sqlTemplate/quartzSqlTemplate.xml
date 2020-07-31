@@ -11,6 +11,12 @@
             select id, job_name, job_group, start_time, cron_exp, invoke_param, status from quartz_deteail
         ]]>
     </sql>
+
+    <sql key = "getQuartz" dmlType = "select" remark="">
+        <![CDATA[
+            select id, job_name, job_group, start_time, cron_exp, invoke_param, status from quartz_deteail where id = ?
+        ]]>
+    </sql>
 </sqls>
 
 

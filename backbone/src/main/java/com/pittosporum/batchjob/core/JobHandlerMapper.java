@@ -1,11 +1,11 @@
-package com.pittosporum.scheduler.core;
+package com.pittosporum.batchjob.core;
 
+import com.pittosporum.batchjob.JobDelegator;
+import com.pittosporum.exception.BaseRunException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
-import com.pittosporum.exception.BaseRunException;
-import com.pittosporum.scheduler.JobDelegator;
 
 import java.io.File;
 import java.util.HashSet;
@@ -18,7 +18,6 @@ import java.util.Set;
 @Slf4j
 public class JobHandlerMapper {
     @Getter@Setter
-    private static ThreadLocal<Set<Class<?>>> threadLocal = new ThreadLocal<>();
     private static Set<Class<?>> classSet = new HashSet<>();
 
     public static void scanClass(String pathName) throws ClassNotFoundException {
@@ -26,16 +25,17 @@ public class JobHandlerMapper {
             return;
         }
 
+
         File[] javaFileArray = listSchedulerFiles(pathName);
         if (javaFileArray == null || javaFileArray.length == 0){
             return;
         }
 
+        log.info("current Thread:"+Thread.currentThread().getName());
         for (File file : javaFileArray){
             Class<?> clz = convertFileToClass(file);
             if (isJobHandler(clz)){
                 classSet.add(clz);
-                threadLocal.set(classSet);
             }
         }
     }
@@ -57,7 +57,7 @@ public class JobHandlerMapper {
         String[] className = fileName.split("\\.");
 
         Class<?> clz = Thread.currentThread().getContextClassLoader()
-                .loadClass("com.com.pittosporum.scheduler." + className[0]);
+                .loadClass("com.pittosporum.batchjob." + className[0]);
 
         return clz;
     }
@@ -68,5 +68,28 @@ public class JobHandlerMapper {
             throw new BaseRunException("can not find directory" + pathName);
         }
         return file.listFiles();
+    }
+
+    public static Class<?> getClassByName(String name){
+        log.info("当前线程:"+Thread.currentThread().getName());
+        if (StringUtils.isEmpty(name)){
+            return null;
+        }
+
+        if (classSet == null){
+            return null;
+        }
+
+        for (Class<?> clz : classSet){
+            JobDelegator jobDelegator = clz.getAnnotation(JobDelegator.class);
+            if (jobDelegator != null){
+                String val = jobDelegator.name();
+                if (val.equals(name)){
+                    return clz;
+                }
+            }
+        }
+
+        return null;
     }
 }

@@ -1,12 +1,12 @@
 package com.pittosporum.dto;
 
+import com.pittosporum.annotation.DisplayName;
 import lombok.Getter;
 import lombok.Setter;
 import net.sf.oval.constraint.MaxLength;
 import net.sf.oval.constraint.MinLength;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import com.pittosporum.annotation.DisplayName;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -38,7 +38,7 @@ public class QuartzDto {
     @MaxLength(message = "field length cannot be greater than {&amp}", value = 25, profiles = "create")
     @MinLength(message = "field length cannot be less than {&amp}", value = 1, profiles = "create")
     @DisplayName(value = "Cron schedule")
-    private String cronSchedule;
+    private String cronExp;
 
     private String invokeParam;
 }

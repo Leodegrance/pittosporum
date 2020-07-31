@@ -14,6 +14,6 @@ public class Quartz extends BaseEntity {
     private String jobName;
     private String jobGroup;
     private String startTime;
-    private String cronSchedule;
+    private String cronExp;
     private String invokeParam;
 }

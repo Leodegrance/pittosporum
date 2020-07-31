@@ -1,4 +1,4 @@
-package com.pittosporum.scheduler;
+package com.pittosporum.batchjob;
 
 
 import java.lang.annotation.*;

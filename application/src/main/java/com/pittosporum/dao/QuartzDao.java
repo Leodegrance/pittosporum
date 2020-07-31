@@ -8,4 +8,6 @@ import com.pittosporum.entity.Quartz;
 
 public interface QuartzDao {
     void createQuartz(Quartz quartz);
+
+    Quartz getQuartzById(Integer id);
 }

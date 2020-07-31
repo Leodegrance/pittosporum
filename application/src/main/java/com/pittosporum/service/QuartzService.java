@@ -15,7 +15,11 @@ public interface QuartzService {
 
     ProcessResponse<Void> startJob(Integer jobId);
 
+    ProcessResponse<Void> runJob(Integer jobId);
+
     ProcessResponse<Void> deleteQuartz(Integer jobId);
 
     QueryResult<QuartzQueryDto> receiveJobList(QueryParam queryParam);
+
+    ProcessResponse<QuartzDto> getQuartzById(Integer id);
 }
