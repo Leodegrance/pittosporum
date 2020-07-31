@@ -1,6 +1,6 @@
 package com.pittosporum.core;
 
-import pittosporum.constant.GeneralConstant;
+import com.pittosporum.constant.GeneralConstant;
 
 /**
  * @author yichen(graffitidef @ gmail.com)

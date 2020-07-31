@@ -4,8 +4,8 @@ import com.pittosporum.core.SQLProperties;
 import com.pittosporum.core.SQLStoreFactory;
 import com.pittosporum.entity.SQLStore;
 import lombok.extern.slf4j.Slf4j;
-import pittosporum.constant.GeneralConstant;
-import pittosporum.utils.CommonUtil;
+import com.pittosporum.constant.GeneralConstant;
+import com.pittosporum.utils.CommonUtil;
 
 import java.util.List;
 import java.util.PriorityQueue;

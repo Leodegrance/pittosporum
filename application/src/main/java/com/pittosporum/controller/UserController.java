@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pittosporum.constant.ProcessResponse;
-import pittosporum.constant.app.AppErrorCode;
-import pittosporum.dto.UserDto;
-import pittosporum.utils.CommonUtil;
+import com.pittosporum.constant.ProcessResponse;
+import com.pittosporum.constant.app.AppErrorCode;
+import com.pittosporum.dto.UserDto;
+import com.pittosporum.utils.CommonUtil;
 
 import java.util.Map;
 

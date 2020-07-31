@@ -5,8 +5,8 @@ import com.pittosporum.entity.Quartz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pittosporum.constant.Status;
-import pittosporum.xmlsql.XmlSQLMapper;
+import com.pittosporum.constant.Status;
+import com.pittosporum.xmlsql.XmlSQLMapper;
 
 /**
  * @author yichen(graffitidef @ gmail.com)

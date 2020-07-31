@@ -6,8 +6,9 @@ import io.github.yedaxia.apidocs.DocsConfig;
 import io.github.yedaxia.apidocs.plugin.markdown.MarkdownDocPlugin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication(scanBasePackages = {"com.pittosporum", "com.pittosporum.dao"} )
+@SpringBootApplication(scanBasePackages = "com.pittosporum")
 public class ApplicationStarter {
 
     private static void initApiDocument(){
@@ -15,9 +16,9 @@ public class ApplicationStarter {
         config.setProjectPath("application");
         config.addJavaSrcPath("backbone/src/main/java/");
         config.addJavaSrcPath("application/src/main/java/");
-        config.setProjectName("pittosporum-application");
+        config.setProjectName("com.pittosporum-application");
         config.setApiVersion("1.0");
-        config.setDocsPath("D:/workspace/pittosporum-api-doc");
+        config.setDocsPath("D:/workspace/com.pittosporum-api-doc");
         config.setAutoGenerate(Boolean.TRUE);
         config.addPlugin(new MarkdownDocPlugin());
         Docs.buildHtmlDocs(config);

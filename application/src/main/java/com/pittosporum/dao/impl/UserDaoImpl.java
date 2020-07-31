@@ -7,7 +7,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pittosporum.xmlsql.XmlSQLMapper;
+import com.pittosporum.xmlsql.XmlSQLMapper;
 
 import java.util.List;
 

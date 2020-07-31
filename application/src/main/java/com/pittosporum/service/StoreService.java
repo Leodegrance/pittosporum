@@ -1,11 +1,11 @@
 package com.pittosporum.service;
 
-import pittosporum.constant.ProcessResponse;
-import pittosporum.dto.DataBaseProfileDto;
-import pittosporum.dto.SQLStoreDto;
-import pittosporum.dto.view.QueryParam;
-import pittosporum.dto.view.QueryResult;
-import pittosporum.dto.view.SQLStoreQueryDto;
+import com.pittosporum.constant.ProcessResponse;
+import com.pittosporum.dto.DataBaseProfileDto;
+import com.pittosporum.dto.SQLStoreDto;
+import com.pittosporum.dto.view.QueryParam;
+import com.pittosporum.dto.view.QueryResult;
+import com.pittosporum.dto.view.SQLStoreQueryDto;
 
 import java.util.List;
 

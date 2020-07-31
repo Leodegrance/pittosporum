@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pittosporum.constant.Status;
-import pittosporum.utils.CommonUtil;
-import pittosporum.xmlsql.XmlSQLMapper;
+import com.pittosporum.constant.Status;
+import com.pittosporum.utils.CommonUtil;
+import com.pittosporum.xmlsql.XmlSQLMapper;
 
 import java.util.Date;
 import java.util.List;

@@ -2,8 +2,6 @@ package com.pittosporum.scheduler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import pittosporum.scheduler.JobDelegator;
-import pittosporum.scheduler.JobHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

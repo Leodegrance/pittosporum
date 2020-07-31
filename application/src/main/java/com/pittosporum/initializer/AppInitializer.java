@@ -2,6 +2,7 @@ package com.pittosporum.initializer;
 
 import com.pittosporum.entity.DataBaseProfile;
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.Scheduler;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,9 +10,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import com.pittosporum.util.ProfileMapper;
-import pittosporum.utils.CommonLoader;
-import pittosporum.utils.JDBCTemplateMapper;
-import pittosporum.xmlsql.XmlSQLMapper;
+import com.pittosporum.utils.CommonLoader;
+import com.pittosporum.utils.JDBCTemplateMapper;
+import com.pittosporum.scheduler.core.JobHandlerMapper;
+import com.pittosporum.xmlsql.XmlSQLMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +29,9 @@ public class AppInitializer implements InitializingBean {
     @Qualifier("appJdbcTemplate")
     private JdbcTemplate appJdbcTemplate;
 
+    @Autowired(required = false)
+    private Scheduler scheduler;
+
     public void afterPropertiesSet() throws Exception {
         log.info("AppLoader start........");
 
@@ -40,6 +45,7 @@ public class AppInitializer implements InitializingBean {
 
         JDBCTemplateMapper.initJDBCTemplateMapper(dataBaseProfiles.stream().map(DataBaseProfile::getProfileName).collect(Collectors.toList()));
 
+        JobHandlerMapper.scanClass("application/src/main/java/com/com.pittosporum/scheduler");
         log.info("AppLoader end........");
     }
 }

@@ -2,9 +2,6 @@ package com.pittosporum.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import pittosporum.dto.UserDto;
-import pittosporum.entity.BaseEntity;
-import pittosporum.utils.BeanUtil;
 
 import java.util.Date;
 
