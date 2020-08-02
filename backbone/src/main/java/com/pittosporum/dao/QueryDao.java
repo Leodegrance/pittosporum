@@ -1,13 +1,14 @@
 package com.pittosporum.dao;
 
+import com.pittosporum.dto.view.QueryParam;
+import com.pittosporum.dto.view.QueryResult;
+import com.pittosporum.utils.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import com.pittosporum.dto.view.QueryParam;
-import com.pittosporum.dto.view.QueryResult;
-import com.pittosporum.utils.CommonUtil;
+import org.springframework.util.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,9 +33,9 @@ public class QueryDao {
 
         QueryResult<T> result = new QueryResult();
 
-        String whereSql = getQuerySql(queryParam);
+        //String whereSql = getQuerySql(queryParam);
 
-        String countSql = getCountSql(whereSql);
+        String countSql = getCountSql(queryParam.getMainSql());
 
         String limitSql = getLimitSql(queryParam);
 
@@ -43,7 +44,12 @@ public class QueryDao {
         int count = jdbcTemplate.queryForObject(countSql, Integer.TYPE);
 
         StringBuilder mainSql = new StringBuilder();
-        mainSql.append("(").append(whereSql).append(limitSql).append(")").append(orderBySql);
+        mainSql.append("(").append(queryParam.getMainSql());
+        if (!containWhere(mainSql.toString())) {
+            mainSql.append("where 1 = 1");
+        }
+        mainSql.append(limitSql).append(")").append(orderBySql);
+
         log.info("query sql " + mainSql);
 
         LinkedHashMap<String, Object> filterParams = queryParam.getFilterParams();
@@ -87,6 +93,10 @@ public class QueryDao {
         return rawSqlStat.toString();
     }
 
+    private boolean containWhere(String sql){
+        return !StringUtils.isEmpty(sql)
+                && sql.indexOf("where") != -1 ? true : false;
+    }
 
     private String getLimitSql(QueryParam queryParam){
         if (queryParam == null){

@@ -1,10 +1,10 @@
 package com.pittosporum.utils;
 
-import org.springframework.util.StringUtils;
-import org.xml.sax.SAXException;
 import com.pittosporum.xmlsql.XMLSQLParse;
 import com.pittosporum.xmlsql.XmlSQLMapper;
 import com.pittosporum.xmlsql.XmlSQLTemplate;
+import org.springframework.util.StringUtils;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
@@ -35,18 +35,18 @@ public final class CommonLoader {
             List<File> list = Arrays.stream(listFiles).filter(i -> i.getName().endsWith(".xml")).collect(Collectors.toList());
 
             XMLSQLParse xmlsqlParse = new XMLSQLParse();
-            LinkedHashMap<String, List<XmlSQLTemplate>> catalog = new LinkedHashMap<>();
+            LinkedHashMap<String, List<XmlSQLTemplate>> catalogMap = new LinkedHashMap<>();
             for (File f : list) {
                 String fileUri = f.getAbsolutePath();
                 xmlsqlParse.parse(fileUri);
                 String catalogStr = xmlsqlParse.getCatalog();
                 List<XmlSQLTemplate> sqlTemplateList = xmlsqlParse.getXmlSQLTemplateList();
                 if (!StringUtils.isEmpty(catalogStr) && !CommonUtil.isEmpty(sqlTemplateList)){
-                    catalog.put(catalogStr, sqlTemplateList);
+                    catalogMap.put(catalogStr, sqlTemplateList);
                 }
             }
 
-            XmlSQLMapper.setCatalogMap(catalog);
+            XmlSQLMapper.initDynamicSqlTemplate(catalogMap);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.pittosporum.dao;
 
 import com.pittosporum.entity.SQLStore;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,4 +17,6 @@ public interface StoreDao {
     SQLStore selectSqlStoreById(Integer id);
 
     void changeRunStatus(Integer id, String status);
+
+    List<SQLStore> selectSqlByDate(Date date);
 }

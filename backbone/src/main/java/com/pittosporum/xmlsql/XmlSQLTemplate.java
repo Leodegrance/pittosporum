@@ -13,4 +13,6 @@ public class XmlSQLTemplate {
     private String catalog;
     private String sqlKey;
     private String sql;
+    private String dmlType;
+    private String remark;
 }

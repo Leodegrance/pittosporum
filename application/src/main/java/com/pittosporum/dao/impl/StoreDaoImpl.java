@@ -48,4 +48,10 @@ public class StoreDaoImpl implements StoreDao {
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "changeRunStatus");
         jdbcTemplate.update(sql,new Object[]{status, count + 1, id});
     }
+
+    @Override
+    public List<SQLStore> selectSqlByDate(Date date) {
+
+        return null;
+    }
 }

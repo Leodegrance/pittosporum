@@ -7,7 +7,6 @@ import com.pittosporum.utils.CommonLoader;
 import com.pittosporum.utils.JDBCTemplateMapper;
 import com.pittosporum.xmlsql.XmlSQLMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.Scheduler;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,9 +27,6 @@ public class AppInitializer implements InitializingBean {
     @Autowired
     @Qualifier("appJdbcTemplate")
     private JdbcTemplate appJdbcTemplate;
-
-    @Autowired(required = false)
-    private Scheduler scheduler;
 
     public void afterPropertiesSet() throws Exception {
         log.info("AppLoader start........");

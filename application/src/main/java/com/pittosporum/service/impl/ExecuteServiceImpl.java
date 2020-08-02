@@ -15,10 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -82,5 +79,10 @@ public class ExecuteServiceImpl implements ExecuteService {
             log.error("========>>>>executeSqlByStoreId>>>>>>>>>>>>>", e);
             dao.changeRunStatus(sqlProperties.getStoreId(), Status.EXECUTE_FAILURE);
         }
+    }
+
+    @Override
+    public ProcessResponse<Void> executeSqlByDate(Date date) {
+        return null;
     }
 }

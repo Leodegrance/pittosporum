@@ -60,5 +60,10 @@ create table app_store.quartz_deteail(
 	start_time varchar(20)  COMMENT 'start time',
 	cron_exp varchar(15) not null COMMENT 'cron schedule',
 	invoke_param varchar(50)  COMMENT 'invoke param',
+	create_by varchar(25) NOT NULL COMMENT 'create user',
+	create_dt datetime NOT null COMMENT 'create time',
+	update_by varchar(25) NOT NULL COMMENT 'create user',
+	update_dt datetime NOT null COMMENT 'updated time',
 	status char(10) not null default 'AT0001'
 )ENGINE=InnoDB auto_increment = 10000;
+

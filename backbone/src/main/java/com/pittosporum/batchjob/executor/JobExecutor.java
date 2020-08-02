@@ -41,7 +41,7 @@ public class JobExecutor implements IJobExecutor{
 
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(cronExp);
         Trigger trigger = newTrigger()
-                .withIdentity("myTrigger", "group1")
+                .withIdentity(jobName, jobGroup)
                 .startNow()
                 .withSchedule(cronScheduleBuilder)
                 .build();

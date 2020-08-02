@@ -24,11 +24,17 @@ public class XMLSQLParse extends DefaultHandler {
     private static final String ELEM_SQL        = "sql";
     private static final String ATTR_CATALOG    = "catalog";
     private static final String ATTR_KEY        = "key";
+    private static final String ATTR_DML_TYPE        = "key";
+    private static final String ATTR_REMARK        = "remark";
 
     @Getter
     private String catalog;
 
     private String key;
+
+    private String dmlType;
+
+    private String remark;
 
     private StringBuilder sqlAt;
 
@@ -61,6 +67,8 @@ public class XMLSQLParse extends DefaultHandler {
         } else if (qName.equalsIgnoreCase(ELEM_SQL)) {
             sqlAt.setLength(0);
             key = attributes.getValue(ATTR_KEY);
+            dmlType = attributes.getValue(ATTR_DML_TYPE);
+            remark = attributes.getValue(ATTR_REMARK);
         }
     }
     @Override
@@ -74,6 +82,8 @@ public class XMLSQLParse extends DefaultHandler {
             XmlSQLTemplate xmlSQLTemplate = new XmlSQLTemplate();
             xmlSQLTemplate.setSqlKey(key);
             xmlSQLTemplate.setCatalog(catalog);
+            xmlSQLTemplate.setDmlType(dmlType);
+            xmlSQLTemplate.setRemark(remark);
             xmlSQLTemplate.setSql(sqlAt.toString());
             xmlSQLTemplateList.add(xmlSQLTemplate);
         }
