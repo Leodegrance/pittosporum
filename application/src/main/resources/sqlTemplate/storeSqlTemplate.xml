@@ -3,7 +3,6 @@
     <sql key = "searchProfile" dmlType = "select" remark="">
         <![CDATA[
             SELECT id, profile_name, create_by, create_dt, update_by, update_dt FROM profile where 1 = 1
-            <#if id??> and id = ?</#if>
         ]]>
     </sql>
 

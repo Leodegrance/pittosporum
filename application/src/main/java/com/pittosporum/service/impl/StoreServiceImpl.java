@@ -1,27 +1,27 @@
 package com.pittosporum.service.impl;
 
 import com.alibaba.druid.sql.ast.SQLStatement;
-import com.pittosporum.dao.StoreDao;
-import com.pittosporum.entity.DataBaseProfile;
-import com.pittosporum.entity.SQLStore;
-import com.pittosporum.service.StoreService;
-import com.pittosporum.util.ProfileMapper;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.pittosporum.constant.ProcessResponse;
 import com.pittosporum.constant.app.AppErrorCode;
 import com.pittosporum.dao.QueryDao;
+import com.pittosporum.dao.StoreDao;
 import com.pittosporum.dto.DataBaseProfileDto;
 import com.pittosporum.dto.SQLStoreDto;
 import com.pittosporum.dto.view.QueryParam;
 import com.pittosporum.dto.view.QueryResult;
 import com.pittosporum.dto.view.SQLStoreQueryDto;
+import com.pittosporum.entity.DataBaseProfile;
+import com.pittosporum.entity.SQLStore;
+import com.pittosporum.service.StoreService;
+import com.pittosporum.util.ProfileMapper;
 import com.pittosporum.utils.BeanUtil;
 import com.pittosporum.utils.CommonUtil;
 import com.pittosporum.utils.SQLValidator;
 import com.pittosporum.xmlsql.XmlSQLMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +81,6 @@ public class StoreServiceImpl implements StoreService {
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "receiveSqlStore");
         queryParam.setEntityClz(SQLStoreQueryDto.class);
         queryParam.setMainSql(sql);
-
         return queryDao.query(queryParam);
     }
 
