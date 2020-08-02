@@ -24,7 +24,7 @@ public class XMLSQLParse extends DefaultHandler {
     private static final String ELEM_SQL        = "sql";
     private static final String ATTR_CATALOG    = "catalog";
     private static final String ATTR_KEY        = "key";
-    private static final String ATTR_DML_TYPE        = "key";
+    private static final String ATTR_DML_TYPE        = "dmlType";
     private static final String ATTR_REMARK        = "remark";
 
     @Getter

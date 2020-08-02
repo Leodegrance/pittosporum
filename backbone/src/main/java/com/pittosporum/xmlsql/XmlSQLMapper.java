@@ -36,7 +36,7 @@ public final class XmlSQLMapper {
         for (Map.Entry<String, List<XmlSQLTemplate>> entry : linkedHashMap.entrySet()){
             List<XmlSQLTemplate> list = entry.getValue();
             for (XmlSQLTemplate i : list){
-                if (isDynamicSql(i.getSql())) {
+                if (isDynamicSql(i.getSql()) && "select".equals(i.getDmlType())) {
                     loader.putTemplate(getKey(i.getCatalog(), i.getSqlKey()), i.getSql());
                 }
             }
