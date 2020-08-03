@@ -1,6 +1,7 @@
 package com.pittosporum.batchjob;
 
 import com.pittosporum.batchjob.executor.JobHandler;
+import com.pittosporum.constant.Status;
 import com.pittosporum.service.ExecuteService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
@@ -17,6 +18,7 @@ import java.util.Date;
 @DisallowConcurrentExecution
 @JobDelegator(name = "patchDataJobHandler")
 public class PatchDataJobHandler implements JobHandler {
+
     @Autowired
     private ExecuteService executeService;
 
@@ -24,8 +26,7 @@ public class PatchDataJobHandler implements JobHandler {
     public void execute(JobExecutionContext jobExecutionContext) {
         log.info("PatchDataJobHandler start.........");
         Date today = new Date();
-
-
+        executeService.executeSqlByStatusAndDate(Status.PENDING_EXECUTE, today);
         log.info("PatchDataJobHandler end.........");
     }
 }

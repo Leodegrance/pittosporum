@@ -52,15 +52,24 @@ public class ExecuteServiceImpl implements ExecuteService {
             }
         }
 
-        PriorityQueue<SQLProperties> executeQueue = SQLPropertiesParseUtil.parseToSQLPropertiesList(sqlStoreList);
+        executeForList(sqlStoreList);
+
+        return ProcessResponse.success();
+    }
+
+    private void executeForList(List<SQLStore> list){
+        PriorityQueue<SQLProperties> executeQueue = SQLPropertiesParseUtil.parseToSQLPropertiesList(list);
+
+        if (executeQueue == null && executeQueue.isEmpty()){
+            log.info("executeForList ==>>> list is empty");
+            return;
+        }
 
         Iterator<SQLProperties> itr = executeQueue.iterator();
         while (itr.hasNext()){
             SQLProperties e = itr.next();
             execute(e);
         }
-
-        return ProcessResponse.success();
     }
 
     private void execute(SQLProperties sqlProperties){
@@ -82,7 +91,16 @@ public class ExecuteServiceImpl implements ExecuteService {
     }
 
     @Override
-    public ProcessResponse<Void> executeSqlByDate(Date date) {
-        return null;
+    public ProcessResponse<Void> executeSqlByStatusAndDate(String status, Date date) {
+        List<SQLStore> list = dao.selectSqlByStatusAndDate(status, date);
+
+        executeForList(list);
+
+        return ProcessResponse.success();
     }
+
+
+
+
+
 }

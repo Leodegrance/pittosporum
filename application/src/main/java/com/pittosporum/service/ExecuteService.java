@@ -15,7 +15,7 @@ public interface ExecuteService {
 
     ProcessResponse<Void> executeSqlList(List<Integer> storeIds);
 
-    ProcessResponse<Void> executeSqlByDate(Date date);
+    ProcessResponse<Void> executeSqlByStatusAndDate(String status, Date date);
 
 
 }

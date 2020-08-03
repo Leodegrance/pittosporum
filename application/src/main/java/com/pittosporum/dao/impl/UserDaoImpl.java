@@ -1,13 +1,12 @@
 package com.pittosporum.dao.impl;
 
+import com.pittosporum.dao.RepositoryHelper;
 import com.pittosporum.dao.UserDao;
 import com.pittosporum.entity.User;
+import com.pittosporum.xmlsql.XmlSQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import com.pittosporum.xmlsql.XmlSQLMapper;
 
 import java.util.List;
 
@@ -18,18 +17,18 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private RepositoryHelper repositoryHelper;
 
     @Override
     public User findUserById(String id) {
         String sql = XmlSQLMapper.receiveSql("userCatalog", "findUserById");
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), id);
+        return repositoryHelper.queryForObject(sql, User.class, id);
     }
 
     @Override
     public User findUserByName(String name) {
         String sql = XmlSQLMapper.receiveSql("userCatalog", "findUserByName");
-        List<User> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), name);
+        List<User> list = repositoryHelper.queryForList(sql, User.class, name);
         return DataAccessUtils.uniqueResult(list);
     }
 }

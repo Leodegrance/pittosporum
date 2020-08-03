@@ -3,10 +3,12 @@ package com.pittosporum.dao;
 import com.pittosporum.dto.view.QueryParam;
 import com.pittosporum.dto.view.QueryResult;
 import com.pittosporum.utils.CommonUtil;
+import com.pittosporum.xmlsql.XmlSQLMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedHashMap;
@@ -17,14 +19,39 @@ import java.util.Set;
 /**
  * @author yichen(graffitidef @ gmail.com)
  */
-
 @Repository
 @Slf4j
-public class QueryDao {
-
+public class RepositoryHelper {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public static String getSql(String catalog, String key){
+        return XmlSQLMapper.receiveSql(catalog, key);
+    }
+
+    public <T> List<T> queryForList(String sql, Class<T> clz, @Nullable Object... args){
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(clz), args);
+    }
+
+    public <T> T queryForObject(String sql, Class<T> clz, @Nullable Object... args){
+        List<T> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(clz), args);
+        return CommonUtil.isEmpty(list) ? null : list.get(0);
+    }
+
+    public <T> T querySimpleObject(String sql, Class<T> clz, @Nullable Object... args){
+        return jdbcTemplate.queryForObject(sql, clz, args);
+    }
+
+    public int update(String sql, @Nullable Object... args){
+        return jdbcTemplate.update(sql, args);
+    }
+
+    /**
+     * use for paging
+     * @param queryParam
+     * @param <T>
+     * @return
+     */
     public <T> QueryResult<T> query(QueryParam<T> queryParam){
         if (jdbcTemplate == null || queryParam == null){
             return null;

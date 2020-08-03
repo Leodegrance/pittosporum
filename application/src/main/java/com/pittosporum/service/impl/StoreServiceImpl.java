@@ -3,7 +3,6 @@ package com.pittosporum.service.impl;
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.pittosporum.constant.ProcessResponse;
 import com.pittosporum.constant.app.AppErrorCode;
-import com.pittosporum.dao.QueryDao;
 import com.pittosporum.dao.StoreDao;
 import com.pittosporum.dto.DataBaseProfileDto;
 import com.pittosporum.dto.SQLStoreDto;
@@ -36,9 +35,6 @@ import java.util.Map;
 public class StoreServiceImpl implements StoreService {
     @Autowired
     private StoreDao storeDao;
-
-    @Autowired
-    private QueryDao queryDao;
 
     @Override
     public List<SQLStoreDto> receiveSqlStore(Integer profileId, String status) {
@@ -81,7 +77,7 @@ public class StoreServiceImpl implements StoreService {
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "receiveSqlStore");
         queryParam.setEntityClz(SQLStoreQueryDto.class);
         queryParam.setMainSql(sql);
-        return queryDao.query(queryParam);
+        return storeDao.receiveStoreData(queryParam);
     }
 
     @Override

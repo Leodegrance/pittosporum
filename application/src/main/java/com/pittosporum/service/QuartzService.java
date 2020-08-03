@@ -1,5 +1,6 @@
 package com.pittosporum.service;
 
+import com.pittosporum.batchjob.model.ReturnT;
 import com.pittosporum.constant.ProcessResponse;
 import com.pittosporum.dto.QuartzDto;
 import com.pittosporum.dto.view.QuartzQueryDto;
@@ -13,9 +14,7 @@ import com.pittosporum.dto.view.QueryResult;
 public interface QuartzService {
     ProcessResponse<Void> createQuartz(QuartzDto quartzDto);
 
-    ProcessResponse<Void> startJob(Integer jobId);
-
-    ProcessResponse<Void> runJob(Integer jobId);
+    ProcessResponse<ReturnT<String>> startJob(Integer jobId);
 
     ProcessResponse<Void> deleteQuartz(Integer jobId);
 

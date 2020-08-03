@@ -1,5 +1,6 @@
 package com.pittosporum.batchjob.executor;
 
+import com.pittosporum.batchjob.model.ReturnT;
 import com.pittosporum.batchjob.model.TriggerStrategy;
 
 /**
@@ -7,6 +8,5 @@ import com.pittosporum.batchjob.model.TriggerStrategy;
  */
 
 public interface IJobExecutor {
-
-    void execute(TriggerStrategy triggerStrategy);
+    ReturnT<String> execute(TriggerStrategy triggerStrategy);
 }

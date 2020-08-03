@@ -1,7 +1,7 @@
 package com.pittosporum.utils;
 
-import com.pittosporum.xmlsql.XMLSQLParse;
 import com.pittosporum.xmlsql.XmlSQLMapper;
+import com.pittosporum.xmlsql.XmlSQLParse;
 import com.pittosporum.xmlsql.XmlSQLTemplate;
 import org.springframework.util.StringUtils;
 import org.xml.sax.SAXException;
@@ -34,7 +34,7 @@ public final class CommonLoader {
             File[] listFiles = file.listFiles();
             List<File> list = Arrays.stream(listFiles).filter(i -> i.getName().endsWith(".xml")).collect(Collectors.toList());
 
-            XMLSQLParse xmlsqlParse = new XMLSQLParse();
+            XmlSQLParse xmlsqlParse = new XmlSQLParse();
             LinkedHashMap<String, List<XmlSQLTemplate>> catalogMap = new LinkedHashMap<>();
             for (File f : list) {
                 String fileUri = f.getAbsolutePath();

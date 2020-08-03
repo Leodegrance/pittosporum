@@ -1,6 +1,5 @@
 package com.pittosporum.xmlsql;
 
-import com.pittosporum.dto.view.QueryParam;
 import com.pittosporum.utils.CommonUtil;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.core.TemplateClassResolver;
@@ -82,16 +81,16 @@ public final class XmlSQLMapper {
     }
 
     public static String receiveSql(String catalog, String key){
-        return receiveSql(catalog, key, new QueryParam());
+        return receiveSql(catalog, key, null);
     }
 
-    public static String receiveSql(String catalog, String key, QueryParam queryParam) {
+    public static String receiveSql(String catalog, String key, Map<String, Object> params) {
         String sqlStat = getSql(catalog, key);
         try {
             if (isDynamicSql(sqlStat)) {
                 StringWriter writer = new StringWriter();
                 Template temp = cfg.getTemplate(getKey(catalog, key));
-                temp.process(queryParam.getFilterParams(), writer);
+                temp.process(params, writer);
                 writer.flush();
                 sqlStat = writer.toString();
             }

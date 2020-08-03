@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 @Slf4j
-public class XMLSQLParse extends DefaultHandler {
+public class XmlSQLParse extends DefaultHandler {
     private static final String ELEM_SQLS       = "sqls";
     private static final String ELEM_SQL        = "sql";
     private static final String ATTR_CATALOG    = "catalog";
