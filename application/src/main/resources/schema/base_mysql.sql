@@ -67,3 +67,16 @@ create table app_store.quartz_deteail(
 	status char(10) not null default 'AT0001'
 )ENGINE=InnoDB auto_increment = 10000;
 
+create table app_store.audit_trail_logging(
+	id bigint(20) unsigned primary key NOT NULL AUTO_INCREMENT COMMENT 'primary_key',
+	operation int(5) not null,
+	module varchar(10) not null,
+	function_name varchar(10) not null,
+	before_data  varchar(8000),
+	relate_to bigint(20) unsigned NOT NULL,
+	after_data varchar(8000),
+	create_by varchar(25) NOT NULL COMMENT 'create user',
+	create_dt datetime NOT null COMMENT 'create time',
+	status char(10) not null default 'AT0001'
+	/*foreign key(relate_to) references app_store.store(id)*/
+)ENGINE=InnoDB auto_increment = 10000;

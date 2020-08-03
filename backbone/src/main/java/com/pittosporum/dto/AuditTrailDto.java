@@ -1,4 +1,4 @@
-package com.pittosporum.entity;
+package com.pittosporum.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class AuditTrail extends BaseEntity {
+public class AuditTrailDto {
     private Integer id;
     private Integer operation;
     private String module;
