@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 public class MasterCodeServiceImpl implements MasterCodeService {
-
     @Override
     public List<MasterCodeDto> receiveAllMasterCode() {
         return null;
