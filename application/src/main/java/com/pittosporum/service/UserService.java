@@ -9,4 +9,5 @@ import com.pittosporum.dto.UserDto;
 
 public interface UserService {
     ProcessResponse<UserDto> login(String name, String pwd);
+
 }

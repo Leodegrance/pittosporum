@@ -2,13 +2,19 @@
 <sqls catalog="quartzCatalog">
     <sql key = "createQuartz" dmlType = "insert" remark="">
         <![CDATA[
-            insert into quartz_deteail (job_name, job_group, start_time, cron_exp, invoke_param, status) values (?, ?, ?, ?, ?, ?)
+            insert into quartz_deteail (job_name, job_group, start_time, cron_exp, invoke_param, create_by, create_dt, update_by, update_dt, status) values (?, ?, ?, ?, ?, ?, ?,?,?,?)
         ]]>
     </sql>
 
     <sql key = "receiveAll" dmlType = "select" remark="">
         <![CDATA[
-            select id, job_name, job_group, start_time, cron_exp, invoke_param, status from quartz_deteail
+            select id, job_name, job_group, start_time, cron_exp as cronSchedule, invoke_param, status from quartz_deteail where status = 'AT0001'
+        ]]>
+    </sql>
+
+    <sql key = "updateQuartz" dmlType = "update" remark="">
+        <![CDATA[
+            UPDATE quartz_deteail SET status= ?  WHERE id= ?;
         ]]>
     </sql>
 

@@ -6,6 +6,7 @@ import com.pittosporum.dto.QuartzDto;
 import com.pittosporum.dto.view.QuartzQueryDto;
 import com.pittosporum.dto.view.QueryParam;
 import com.pittosporum.dto.view.QueryResult;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -21,4 +22,5 @@ public interface QuartzService {
     QueryResult<QuartzQueryDto> receiveJobList(QueryParam queryParam);
 
     ProcessResponse<QuartzDto> getQuartzById(Integer id);
+
 }

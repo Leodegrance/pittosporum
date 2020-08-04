@@ -8,6 +8,7 @@ import com.pittosporum.dao.StoreDao;
 import com.pittosporum.entity.SQLStore;
 import com.pittosporum.service.ExecuteService;
 import com.pittosporum.util.SQLPropertiesParseUtil;
+import com.pittosporum.utils.CommonUtil;
 import com.pittosporum.utils.JDBCTemplateMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +59,11 @@ public class ExecuteServiceImpl implements ExecuteService {
     }
 
     private void executeForList(List<SQLStore> list){
-        PriorityQueue<SQLProperties> executeQueue = SQLPropertiesParseUtil.parseToSQLPropertiesList(list);
-
-        if (executeQueue == null && executeQueue.isEmpty()){
-            log.info("executeForList ==>>> list is empty");
+        if (CommonUtil.isEmpty(list)){
             return;
         }
+
+        PriorityQueue<SQLProperties> executeQueue = SQLPropertiesParseUtil.parseToSQLPropertiesList(list);
 
         Iterator<SQLProperties> itr = executeQueue.iterator();
         while (itr.hasNext()){

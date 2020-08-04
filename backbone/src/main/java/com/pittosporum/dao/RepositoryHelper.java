@@ -132,7 +132,7 @@ public class RepositoryHelper {
             StringBuilder stb = new StringBuilder();
             stb.append(" AND ID >= ( SELECT ID ");
             stb.append(tableName);
-            int itemNo = pageNo == 1 ? 1 : pageNo * pageSize;
+            int itemNo = (pageNo - 1 ) * pageSize;
             stb.append(" ").append("LIMIT").append(" ").append(itemNo).append(",")
                     .append(" ").append("1").append(")").append(" ").append("LIMIT").append(" ").append(pageSize);
             limitSql = stb.toString();

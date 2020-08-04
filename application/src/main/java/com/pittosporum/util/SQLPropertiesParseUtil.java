@@ -19,10 +19,6 @@ public class SQLPropertiesParseUtil {
     private SQLPropertiesParseUtil(){}
 
     public static PriorityQueue<SQLProperties> parseToSQLPropertiesList(List<SQLStore> storeList){
-        if (CommonUtil.isEmpty(storeList)){
-            return null;
-        }
-
         PriorityQueue<SQLProperties> priorityQueue = new PriorityQueue<>();
         for (SQLStore i : storeList){
             SQLProperties e = parseToSQLProperties(i);

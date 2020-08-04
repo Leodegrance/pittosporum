@@ -9,12 +9,14 @@ import com.pittosporum.dto.view.QuartzQueryDto;
 import com.pittosporum.dto.view.QueryParam;
 import com.pittosporum.dto.view.QueryResult;
 import com.pittosporum.service.QuartzService;
+import com.pittosporum.utils.CommonUtil;
 import com.pittosporum.utils.ValidateHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -66,6 +68,18 @@ public class QuartzController {
         }
 
         return quartzService.getQuartzById(id);
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/delete", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProcessResponse<Void> deleteById(@RequestBody Map<String,Object> params){
+        if (CommonUtil.isEmpty(params)){
+            return ProcessResponse.failure(AppErrorCode.PARAMS_IS_EMPTY.getStatusCode(), AppErrorCode.PARAMS_IS_EMPTY.getMessage());
+        }
+
+        int jobId = (int) params.get("jobId");
+
+        return quartzService.deleteQuartz(jobId);
     }
 }
 

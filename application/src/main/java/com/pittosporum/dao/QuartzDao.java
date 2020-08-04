@@ -14,5 +14,7 @@ public interface QuartzDao {
 
     Quartz getQuartzById(Integer id);
 
-    QueryResult<QuartzQueryDto> receiveJobList(QueryParam queryParam);
+    QueryResult<QuartzQueryDto> receiveAllJob(QueryParam queryParam);
+
+    void deleteQuartz(Integer jobId);
 }

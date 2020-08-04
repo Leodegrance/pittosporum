@@ -42,7 +42,8 @@ public class QuartzImpl implements QuartzService {
 
     @Override
     public ProcessResponse<Void> deleteQuartz(Integer jobId) {
-        return null;
+        quartzDao.deleteQuartz(jobId);
+        return ProcessResponse.success();
     }
 
     @Override
@@ -50,7 +51,9 @@ public class QuartzImpl implements QuartzService {
         String sql = XmlSQLMapper.receiveSql("quartzCatalog", "receiveAll");
         queryParam.setEntityClz(QuartzQueryDto.class);
         queryParam.setMainSql(sql);
-        return quartzDao.receiveJobList(queryParam);
+
+        QueryResult queryResult = quartzDao.receiveAllJob(queryParam);
+        return queryResult;
     }
 
     @Override

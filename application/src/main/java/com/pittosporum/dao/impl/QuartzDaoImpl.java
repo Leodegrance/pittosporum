@@ -11,6 +11,8 @@ import com.pittosporum.xmlsql.XmlSQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+
 /**
  * @author yichen(graffitidef @ gmail.com)
  */
@@ -24,7 +26,7 @@ public class QuartzDaoImpl implements QuartzDao {
     @Override
     public void createQuartz(Quartz quartz) {
         String sql = XmlSQLMapper.receiveSql("quartzCatalog", "createQuartz");
-        repositoryHelper.update(sql, quartz.getJobName(), quartz.getJobGroup(), quartz.getStartTime(), quartz.getCronExp(), quartz.getInvokeParam(), Status.ACTIVE_RECORD);
+        repositoryHelper.update(sql, quartz.getJobName(), quartz.getJobGroup(), quartz.getStartTime(), quartz.getCronExp(), quartz.getInvokeParam(), "graffitidef", new Date(), "graffitidef", new Date(), Status.ACTIVE_RECORD);
     }
 
     @Override
@@ -34,7 +36,13 @@ public class QuartzDaoImpl implements QuartzDao {
     }
 
     @Override
-    public QueryResult<QuartzQueryDto> receiveJobList(QueryParam queryParam) {
+    public QueryResult<QuartzQueryDto> receiveAllJob(QueryParam queryParam) {
         return repositoryHelper.query(queryParam);
+    }
+
+    @Override
+    public void deleteQuartz(Integer jobId) {
+        String sql = XmlSQLMapper.receiveSql("quartzCatalog", "updateQuartz");
+        repositoryHelper.update(sql, new Object[]{Status.INACTIVE_RECORD, jobId});
     }
 }
