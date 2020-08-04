@@ -80,3 +80,23 @@ create table app_store.audit_trail_logging(
 	status char(10) not null default 'AT0001'
 	/*foreign key(relate_to) references app_store.store(id)*/
 )ENGINE=InnoDB auto_increment = 10000;
+
+
+create table app_store.master_code_category(
+	id bigint(20) unsigned primary key NOT NULL AUTO_INCREMENT COMMENT 'primary_key',
+	category_name varchar(15) not null,
+	desciprtion varchar(255)
+)ENGINE=InnoDB auto_increment = 10000;
+
+
+ create table app_store.master_code(
+	id bigint(20) unsigned primary key NOT NULL AUTO_INCREMENT COMMENT 'primary_key',
+	code_key varchar(15) not null,
+	description varchar(255),
+	code_value varchar(255) not null,
+	code_category_id bigint(20) unsigned,
+	create_by varchar(25) NOT NULL COMMENT 'create user',
+	create_dt datetime NOT null COMMENT 'create time',
+	status char(10) not null default 'AT0001',
+	foreign key(code_category_id) references app_store.master_code_category(id)
+)ENGINE=InnoDB auto_increment = 10000;
