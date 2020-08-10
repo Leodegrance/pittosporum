@@ -79,4 +79,10 @@ public class StoreDaoImpl implements StoreDao {
     public QueryResult<SQLStoreQueryDto> receiveStoreData(QueryParam queryParam) {
         return repositoryHelper.query(queryParam);
     }
+
+    @Override
+    public void deleteStoreById(Integer id) {
+        String sql = XmlSQLMapper.receiveSql("storeCatalog", "deleteStoreById");
+        repositoryHelper.update(sql, new Object[]{Status.DELETE_RECORD, id});
+    }
 }

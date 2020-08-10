@@ -10,7 +10,7 @@
     <sql key = "receiveSqlStore" dmlType = "select" remark="">
         <![CDATA[
             SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status, run_count, cause
-            FROM store where 1 = 1
+            FROM store where 1 = 1 and status in ('AT0001')
             <#if execute_result??> and execute_result = ?</#if>
             <#if create_dt??> and to_days(create_dt) = to_days(?)</#if>
         ]]>
@@ -50,6 +50,12 @@
     <sql key = "updateCause" dmlType = "update" remark="">
         <![CDATA[
             UPDATE store SET cause = ? where id = ?
+        ]]>
+    </sql>
+
+    <sql key = "deleteStoreById" dmlType = "update" remark="">
+        <![CDATA[
+            UPDATE store SET status = ? where id = ?
         ]]>
     </sql>
 </sqls>

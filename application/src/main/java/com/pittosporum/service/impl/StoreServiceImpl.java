@@ -80,6 +80,12 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public ProcessResponse<Void> deleteStoreById(Integer id) {
+        storeDao.deleteStoreById(id);
+        return ProcessResponse.success();
+    }
+
+    @Override
     public QueryResult<SQLStoreQueryDto> receiveStoreData(QueryParam queryParam) {
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "receiveSqlStore");
         queryParam.setEntityClz(SQLStoreQueryDto.class);

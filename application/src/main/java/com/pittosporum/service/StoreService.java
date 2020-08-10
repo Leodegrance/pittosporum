@@ -18,6 +18,8 @@ public interface StoreService {
 
     ProcessResponse<Void> createStore(SQLStoreDto store);
 
+    ProcessResponse<Void> deleteStoreById(Integer id);
+
     QueryResult<SQLStoreQueryDto> receiveStoreData(QueryParam queryParam);
 
     List<DataBaseProfileDto> receiveDataBaseProfile();

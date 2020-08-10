@@ -12,6 +12,7 @@ import com.pittosporum.service.StoreService;
 import com.pittosporum.utils.ValidateHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -70,6 +71,15 @@ public class StoreController {
         }
 
         return storeService.createStore(store);
+    }
+
+    @PutMapping(value = "delete", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ProcessResponse<Void> deleteStoreById(@RequestBody SQLStoreDto store){
+        if (store == null || StringUtils.isEmpty(store.getId())){
+            return ProcessResponse.failure(AppErrorCode.PARAMS_IS_EMPTY.getStatusCode());
+        }
+
+        return storeService.deleteStoreById(store.getId());
     }
 
     /**

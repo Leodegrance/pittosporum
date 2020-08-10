@@ -28,4 +28,6 @@ public interface StoreDao {
     List<SQLStore> selectSqlByStatusAndDate(String status, Date date);
 
     QueryResult<SQLStoreQueryDto> receiveStoreData(QueryParam queryParam);
+
+    void deleteStoreById(Integer id);
 }
