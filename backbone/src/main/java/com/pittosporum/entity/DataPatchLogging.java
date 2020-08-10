@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class AuditTrail extends BaseEntity {
+public class DataPatchLogging extends BaseEntity {
     private Integer id;
     private Integer operation;
     private String module;

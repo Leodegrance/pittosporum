@@ -9,7 +9,7 @@
 
     <sql key = "receiveSqlStore" dmlType = "select" remark="">
         <![CDATA[
-            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status, run_count
+            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status, run_count, cause
             FROM store where 1 = 1
             <#if execute_result??> and execute_result = ?</#if>
             <#if create_dt??> and to_days(create_dt) = to_days(?)</#if>
@@ -23,9 +23,15 @@
         ]]>
     </sql>
 
+    <sql key = "updateStore" dmlType = "update" remark="">
+        <![CDATA[
+            UPDATE store SET execute_sql=?, execute_result=?, profile_id=?, update_by=?, update_dt=?, status=?, run_count=?, cause=? WHERE id=?;
+        ]]>
+    </sql>
+
     <sql key = "selectSqlStoreById" dmlType = "select" remark="">
         <![CDATA[
-            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, status FROM store where id = ?
+            SELECT id, execute_sql, execute_result, profile_id, create_by, create_dt, update_by, update_dt, run_count, cause, status FROM store where id = ?
         ]]>
     </sql>
 
@@ -38,6 +44,12 @@
     <sql key = "changeRunStatus" dmlType = "update" remark="">
         <![CDATA[
             UPDATE store SET execute_result = ?, run_count = ? where id = ?
+        ]]>
+    </sql>
+
+    <sql key = "updateCause" dmlType = "update" remark="">
+        <![CDATA[
+            UPDATE store SET cause = ? where id = ?
         ]]>
     </sql>
 </sqls>

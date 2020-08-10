@@ -8,7 +8,6 @@ import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -16,7 +15,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class SQLStoreDto implements Serializable {
+public class SQLStoreDto implements Serializable{
     private static final long serialVersionUID = -231417890577521615L;
 
     private Integer id;
@@ -41,9 +40,11 @@ public class SQLStoreDto implements Serializable {
     @NotBlank(message = "can not is null", profiles = "create")*/
     private String createBy;
 
-    private Date createDt;
+    private String createDt;
 
     private String status;
 
     private Integer runCount;
+
+    private String cause;
 }

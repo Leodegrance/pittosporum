@@ -57,27 +57,38 @@ public class RepositoryHelper {
             return null;
         }
 
+        LinkedHashMap<String, Object> filterParams = queryParam.getFilterParams();
+        Object[] paramArray = null;
+        if (!CommonUtil.isEmpty(filterParams)) {
+            paramArray = toValueArray2(filterParams);
+        }
+
         QueryResult<T> result = new QueryResult();
 
         String whereSql = getQuerySql(queryParam);
 
         String countSql = getCountSql(whereSql);
 
+        queryParam.setMainSql(whereSql);
+
         String limitSql = getLimitSql(queryParam);
 
         String orderBySql = getOrderBySql(queryParam);
 
-        int count = jdbcTemplate.queryForObject(countSql, Integer.TYPE);
+        int count;
+        if (CommonUtil.isEmpty(filterParams)){
+            count = jdbcTemplate.queryForObject(countSql, Integer.TYPE);
+        }else {
+            count = jdbcTemplate.queryForObject(countSql, Integer.TYPE, toValueArray(filterParams));
+        }
 
         StringBuilder mainSql = new StringBuilder();
         mainSql.append("(").append(whereSql).append(limitSql).append(")").append(orderBySql);
         log.info("query sql " + mainSql);
 
-        LinkedHashMap<String, Object> filterParams = queryParam.getFilterParams();
 
         List<T> list;
-        if (!CommonUtil.isEmpty(filterParams)){
-            Object[] paramArray = toValueArray(filterParams);
+        if (paramArray != null){
             list = jdbcTemplate.query(mainSql.toString(), new BeanPropertyRowMapper<>(queryParam.getEntityClz()), paramArray);
         }else {
             list = jdbcTemplate.query(mainSql.toString(), new BeanPropertyRowMapper<>(queryParam.getEntityClz()));
@@ -161,12 +172,23 @@ public class RepositoryHelper {
         return orderSql;
     }
 
+
+    private Object[] toValueArray(LinkedHashMap<String, Object> filterParams){
+        Object[] array = new Object[filterParams.size()];
+        int j = 0;
+
+        for (Map.Entry<String, Object> entry : filterParams.entrySet()){
+            array[j++] = entry.getValue();
+        }
+        return array;
+    }
+
     /**
      * use for specify parameter of sql
      * @param filterParams
      * @return
      */
-    private Object[] toValueArray(LinkedHashMap<String, Object> filterParams){
+    private Object[] toValueArray2(LinkedHashMap<String, Object> filterParams){
         Object[] array = new Object[filterParams.size() * 2];
         Object[] array2 = new Object[filterParams.size()];
         int i = 0;

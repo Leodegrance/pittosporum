@@ -1,15 +1,23 @@
 package com.pittosporum.service.impl;
 
+import com.pittosporum.constant.DataPatchLoggingConstant;
 import com.pittosporum.constant.ProcessResponse;
 import com.pittosporum.constant.Status;
 import com.pittosporum.constant.app.AppErrorCode;
+import com.pittosporum.core.Delete;
+import com.pittosporum.core.Insert;
 import com.pittosporum.core.SQLProperties;
+import com.pittosporum.core.Update;
+import com.pittosporum.dao.DataPatchLoggingDao;
 import com.pittosporum.dao.StoreDao;
+import com.pittosporum.entity.DataPatchLogging;
 import com.pittosporum.entity.SQLStore;
 import com.pittosporum.service.ExecuteService;
 import com.pittosporum.util.SQLPropertiesParseUtil;
 import com.pittosporum.utils.CommonUtil;
 import com.pittosporum.utils.JDBCTemplateMapper;
+import com.pittosporum.utils.JsonUtil;
+import com.pittosporum.utils.SQLValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,6 +36,9 @@ public class ExecuteServiceImpl implements ExecuteService {
 
     @Autowired
     private StoreDao dao;
+
+    @Autowired
+    private DataPatchLoggingDao dataPatchLoggingDao;
 
     @Override
     @Transactional
@@ -64,7 +75,6 @@ public class ExecuteServiceImpl implements ExecuteService {
         }
 
         PriorityQueue<SQLProperties> executeQueue = SQLPropertiesParseUtil.parseToSQLPropertiesList(list);
-
         Iterator<SQLProperties> itr = executeQueue.iterator();
         while (itr.hasNext()){
             SQLProperties e = itr.next();
@@ -77,16 +87,47 @@ public class ExecuteServiceImpl implements ExecuteService {
             return;
         }
 
+        DataPatchLogging logging = null;
         try {
             String exSql = sqlProperties.getSql();
             String profileName = sqlProperties.getProfileName();
-
             JdbcTemplate jdbcTemplate = JDBCTemplateMapper.getJdbcTemplateByName(profileName);
+            String backupSql = getBackupSql(exSql);
+            List<Map<String, Object>> backupResult = jdbcTemplate.queryForList(backupSql);
+
+            logging = new DataPatchLogging();
+            int operation;
+            if (sqlProperties instanceof Delete){
+                logging.setBeforeData(JsonUtil.parseToJson(backupResult));
+                operation = DataPatchLoggingConstant.OPERATION_DELETE;
+            }else if (sqlProperties instanceof Insert){
+                logging.setAfterData(exSql);
+                operation = DataPatchLoggingConstant.OPERATION_INSERT;
+            }else if (sqlProperties instanceof Update){
+                logging.setBeforeData(JsonUtil.parseToJson(backupResult));
+                operation = DataPatchLoggingConstant.OPERATION_UPDATE;
+            }else {
+                operation = DataPatchLoggingConstant.OPERATION_QUERY;
+            }
+
+            logging.setRelateTo(sqlProperties.getStoreId());
+            logging.setAfterData(exSql);
+            logging.setFunctionName("execute service");
+            logging.setOperation(operation);
+            logging.setModule("application");
+            logging.setStatus(Status.ACTIVE_RECORD);
+
             jdbcTemplate.update(exSql);
             dao.changeRunStatus(sqlProperties.getStoreId(), Status.EXECUTE_OVER);
+            dao.updateCause(sqlProperties.getStoreId(), null);
         }catch (Exception e){
-            log.error("========>>>>executeSqlByStoreId>>>>>>>>>>>>>", e);
+            log.error(e.getMessage());
             dao.changeRunStatus(sqlProperties.getStoreId(), Status.EXECUTE_FAILURE);
+            dao.updateCause(sqlProperties.getStoreId(), e.getMessage());
+        }finally {
+            if (logging != null){
+                dataPatchLoggingDao.createDataPatchLogging(logging);
+            }
         }
     }
 
@@ -99,8 +140,12 @@ public class ExecuteServiceImpl implements ExecuteService {
         return ProcessResponse.success();
     }
 
-
-
-
-
+    public String getBackupSql(String exSql){
+        StringBuilder stb = new StringBuilder();
+        String tableName = SQLValidator.getTableName(exSql);
+        stb.append("select * from ").append(tableName).append(" ");
+        String subConditions = SQLValidator.subConditions(exSql);
+        stb.append(subConditions);
+        return stb.toString();
+    }
 }

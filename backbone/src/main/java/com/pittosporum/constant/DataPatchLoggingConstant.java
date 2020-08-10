@@ -4,8 +4,8 @@ package com.pittosporum.constant;
  * @author yichen(graffitidef @ gmail.com)
  */
 
-public class AuditTrailConstant {
-    private AuditTrailConstant(){}
+public class DataPatchLoggingConstant {
+    private DataPatchLoggingConstant(){}
 
     public static final int OPERATION_INSERT = 10001;
     public static final int OPERATION_UPDATE = 10002;

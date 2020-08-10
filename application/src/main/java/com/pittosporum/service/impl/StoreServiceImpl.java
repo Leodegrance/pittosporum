@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,6 @@ public class StoreServiceImpl implements StoreService {
     @Override
     @Transactional
     public ProcessResponse<Void> createStore(SQLStoreDto store) {
-        int profileId = store.getProfileId();
         String executeSql = store.getExecuteSql();
 
         List<SQLStatement> statementList;
@@ -62,10 +62,17 @@ public class StoreServiceImpl implements StoreService {
         if (!CommonUtil.isEmpty(statementList)){
             for (SQLStatement statement : statementList){
                 String parse = statement.toString();
-                SQLStore sqlStore = new SQLStore();
-                sqlStore.setProfileId(profileId);
+                SQLStore sqlStore = BeanUtil.copyProperties(store, SQLStore.class);
+                sqlStore.setStatus(store.getStatus());
+                sqlStore.setCreateBy(store.getCreateBy());
+                sqlStore.setUpdateBy(store.getCreateBy());
                 sqlStore.setExecuteSql(parse);
-                storeDao.createStore(sqlStore);
+
+                if (StringUtils.isEmpty(sqlStore.getId())){
+                    storeDao.createStore(sqlStore);
+                }else {
+                    storeDao.updateStore(sqlStore);
+                }
             }
         }
 

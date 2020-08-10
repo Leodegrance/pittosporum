@@ -7,6 +7,7 @@ import com.pittosporum.dto.view.QueryParam;
 import com.pittosporum.dto.view.QueryResult;
 import com.pittosporum.dto.view.SQLStoreQueryDto;
 import com.pittosporum.entity.SQLStore;
+import com.pittosporum.utils.DateUtil;
 import com.pittosporum.xmlsql.XmlSQLMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,15 @@ public class StoreDaoImpl implements StoreDao {
     @Override
     public void createStore(SQLStore store) {
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "createStore");
-        repositoryHelper.update(sql, new Object[] {store.getExecuteSql(), Status.PENDING_EXECUTE, store.getProfileId(), "graffitidef", new Date(), "graffitidef", new Date(), Status.ACTIVE_RECORD});
+        String dateStr = DateUtil.formatDate(new Date());
+        repositoryHelper.update(sql, new Object[] {store.getExecuteSql(), Status.PENDING_EXECUTE, store.getProfileId(), "graffitidef", dateStr, "graffitidef", dateStr, Status.ACTIVE_RECORD});
+    }
+
+    @Override
+    public void updateStore(SQLStore store) {
+        String sql = XmlSQLMapper.receiveSql("storeCatalog", "updateStore");
+        String dateStr = DateUtil.formatDate(new Date());
+        repositoryHelper.update(sql, new Object[] {store.getExecuteSql(), store.getExecuteResult(), store.getProfileId(), store.getUpdateBy(), dateStr, store.getStatus(), store.getRunCount(), store.getCause(), store.getId()});
     }
 
     @Override
@@ -49,6 +58,12 @@ public class StoreDaoImpl implements StoreDao {
         int count = repositoryHelper.querySimpleObject(runCountSql, Integer.TYPE, id);
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "changeRunStatus");
         repositoryHelper.update(sql, new Object[]{status, count + 1, id});
+    }
+
+    @Override
+    public void updateCause(Integer id, String cause) {
+        String sql = XmlSQLMapper.receiveSql("storeCatalog", "updateCause");
+        repositoryHelper.update(sql, new Object[]{cause, id});
     }
 
     @Override

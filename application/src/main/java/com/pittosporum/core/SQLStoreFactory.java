@@ -16,6 +16,6 @@ public class SQLStoreFactory{
         }else if (dmlName.equalsIgnoreCase(GeneralConstant.DELETE_UPPER)){
             return new Delete();
         }
-        return null;
+        return new Select();
     }
 }

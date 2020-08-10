@@ -1,11 +1,10 @@
 package com.pittosporum.util;
 
+import com.pittosporum.constant.GeneralConstant;
 import com.pittosporum.core.SQLProperties;
 import com.pittosporum.core.SQLStoreFactory;
 import com.pittosporum.entity.SQLStore;
 import lombok.extern.slf4j.Slf4j;
-import com.pittosporum.constant.GeneralConstant;
-import com.pittosporum.utils.CommonUtil;
 
 import java.util.List;
 import java.util.PriorityQueue;
@@ -44,14 +43,7 @@ public class SQLPropertiesParseUtil {
     }
 
     private static SQLProperties convertToProperties(String executeSql, String dmlName, Integer profileId, Integer storeId){
-        SQLProperties sqlProperties = null;
-        if (isDelete(dmlName)){
-            sqlProperties = SQLStoreFactory.createSQLProperties(dmlName);
-        }else if (isUpdate(dmlName)){
-            sqlProperties = SQLStoreFactory.createSQLProperties(dmlName);
-        }else if (isInsert(dmlName)){
-            sqlProperties = SQLStoreFactory.createSQLProperties(dmlName);
-        }
+        SQLProperties sqlProperties = SQLStoreFactory.createSQLProperties(dmlName);
 
         log.info("parse sql sqlProperties ", sqlProperties);
         if (sqlProperties == null){

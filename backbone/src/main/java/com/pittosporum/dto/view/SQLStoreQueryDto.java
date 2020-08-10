@@ -35,4 +35,6 @@ public class SQLStoreQueryDto implements Serializable {
     private String status;
 
     private Integer runCount;
+
+    private String cause;
 }

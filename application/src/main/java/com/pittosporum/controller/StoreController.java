@@ -58,6 +58,22 @@ public class StoreController {
 
     /**
      *
+     * @param store
+     * @return
+     */
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ProcessResponse<Void> updateStore(@RequestBody SQLStoreDto store){
+        ValidateResult validateResult = ValidateHelper.validate(store, "update");
+        if (validateResult.isHasError()){
+            HashMap<String, String> errorMap =  validateResult.getErrorMap();
+            return ProcessResponse.failure(AppErrorCode.PARAM_ERROR.getStatusCode(), ValidateHelper.buildHTMLErrorStr(errorMap));
+        }
+
+        return storeService.createStore(store);
+    }
+
+    /**
+     *
      * @param queryParam
      * @return
      */

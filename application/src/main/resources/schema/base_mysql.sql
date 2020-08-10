@@ -34,7 +34,7 @@ CREATE TABLE `store` (
   KEY `profile_id` (`profile_id`),
   CONSTRAINT `store_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10054 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+alter table store add cause varchar(4000) default null
 
 -- app_store.user_ent definition
 
@@ -67,20 +67,21 @@ create table app_store.quartz_deteail(
 	status char(10) not null default 'AT0001'
 )ENGINE=InnoDB auto_increment = 10000;
 
-create table app_store.audit_trail_logging(
-	id bigint(20) unsigned primary key NOT NULL AUTO_INCREMENT COMMENT 'primary_key',
-	operation int(5) not null,
-	module varchar(10) not null,
-	function_name varchar(10) not null,
-	before_data  varchar(8000),
-	relate_to bigint(20) unsigned NOT NULL,
-	after_data varchar(8000),
-	create_by varchar(25) NOT NULL COMMENT 'create user',
-	create_dt datetime NOT null COMMENT 'create time',
-	status char(10) not null default 'AT0001'
-	/*foreign key(relate_to) references app_store.store(id)*/
-)ENGINE=InnoDB auto_increment = 10000;
-
+-- app_store.audit_trail_logging definition
+CREATE TABLE data_patch_logging (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'primary_key',
+  `operation` int(5) NOT NULL,
+  `module` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `function_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `before_data` varchar(8000) DEFAULT NULL,
+  `relate_to` bigint(20) unsigned NOT NULL,
+  `after_data` varchar(8000) DEFAULT NULL,
+  `create_by` varchar(25) NOT NULL COMMENT 'create user',
+  `create_dt` datetime NOT NULL COMMENT 'create time',
+  `status` char(10) NOT NULL DEFAULT 'AT0001',
+  PRIMARY KEY (`id`)
+  /*foreign key(relate_to) references app_store.store(id)*/
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 create table app_store.master_code_category(
 	id bigint(20) unsigned primary key NOT NULL AUTO_INCREMENT COMMENT 'primary_key',

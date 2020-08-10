@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqls catalog="dataPatchCatalog">
+    <sql key = "createDataPatchLogging" dmlType = "insert" remark="">
+        <![CDATA[
+            INSERT INTO data_patch_logging (operation, module, function_name,before_data, relate_to, after_data, create_by, create_dt, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);
+        ]]>
+    </sql>
+
+</sqls>
+
+

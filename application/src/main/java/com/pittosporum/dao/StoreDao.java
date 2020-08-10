@@ -17,9 +17,13 @@ public interface StoreDao {
 
     void createStore(SQLStore store);
 
+    void updateStore(SQLStore store);
+
     SQLStore selectSqlStoreById(Integer id);
 
     void changeRunStatus(Integer id, String status);
+
+    void updateCause(Integer id, String cause);
 
     List<SQLStore> selectSqlByStatusAndDate(String status, Date date);
 
