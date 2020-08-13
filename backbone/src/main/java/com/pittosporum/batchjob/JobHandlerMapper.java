@@ -24,7 +24,6 @@ public class JobHandlerMapper {
             return;
         }
 
-
         File[] javaFileArray = listSchedulerFiles(pathName);
         if (javaFileArray == null || javaFileArray.length == 0){
             return;
