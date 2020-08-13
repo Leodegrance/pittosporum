@@ -13,7 +13,7 @@
 
     <artifactId>application</artifactId>
     <name>${project.artifactId}</name>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
