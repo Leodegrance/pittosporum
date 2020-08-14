@@ -14,6 +14,9 @@ import java.io.OutputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.jar.JarFile;
 
 /**
  * @author yichen
@@ -23,6 +26,7 @@ import java.nio.file.Files;
 @Slf4j
 public class ResourceUtil {
 	private static final String DEFAULT_TMP_DIR = "resourceTempFolder";
+
 	public  static  final String DEFAULT_TMP_DIR_PATH;
 
 	public static final String FILE_SEPARATOR  = System.getProperty("file.separator");
@@ -126,5 +130,35 @@ public class ResourceUtil {
 		}
 
 		return file;
+	}
+
+	public static Set<Class<?>> findClassesByJar(String jarFile) throws  IOException {
+		log.info("=======>>>>>>>>>>>>>>jarFile>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + jarFile);
+		JarFile jar = new JarFile(jarFile);
+		log.info("=======>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + jar);
+		java.util.Enumeration enumEntries = jar.entries();
+		Set<Class<?>> classes = new HashSet<>();
+		while (enumEntries.hasMoreElements()) {
+			java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
+			java.io.File f = new java.io.File(DEFAULT_TMP_DIR_PATH + "/" + file.getName());
+			if (file.isDirectory()) {
+				// if its a directory, create it
+				f.mkdir();
+				continue;
+			}
+
+			java.io.InputStream is = jar.getInputStream(file);
+			// get the input stream
+			java.io.FileOutputStream fos = new java.io.FileOutputStream(f);
+			while (is.available() > 0) {
+				// write contents of 'is' to 'fos'
+				fos.write(is.read());
+			}
+
+			fos.close();
+			is.close();
+		}
+
+		return classes;
 	}
 }

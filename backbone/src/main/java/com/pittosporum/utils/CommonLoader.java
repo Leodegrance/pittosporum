@@ -26,10 +26,10 @@ public final class CommonLoader {
 
     public static void copyFolderToDir(){
         try {
-            ResourceUtil.copyFileToDir(SQL_TEMPLATE_FOLDER_PATH, "quartzSqlTemplate.xml");
+           /* ResourceUtil.copyFileToDir(SQL_TEMPLATE_FOLDER_PATH, "quartzSqlTemplate.xml");
             ResourceUtil.copyFileToDir(SQL_TEMPLATE_FOLDER_PATH, "storeSqlTemplate.xml");
-            ResourceUtil.copyFileToDir(SQL_TEMPLATE_FOLDER_PATH, "userSqlTemplate.xml");
-            ResourceUtil.copyFileToDir(BATCH_JOB_FOLDER_PATH, "PatchDataJobHandler.java");
+            ResourceUtil.copyFileToDir(SQL_TEMPLATE_FOLDER_PATH, "userSqlTemplate.xml");*/
+            ResourceUtil.findClassesByJar("D:\\workspace\\pittosporum\\application\\target\\pittosporum.jar");
         } catch (IOException e) {
             e.printStackTrace();
         }
