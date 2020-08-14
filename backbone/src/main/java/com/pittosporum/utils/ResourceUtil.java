@@ -13,9 +13,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Files;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
@@ -45,16 +48,11 @@ public class ResourceUtil {
 
 		String filePath = folderName + "/" + fileName;
 
-		log.info("input stream " + filePath);
-
 		InputStream path = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
-
-		log.info("input stream" + path);
 
 		File dir = generateFolderInTempFolder(DEFAULT_TMP_DIR);
 
 		String dirPath = dir.getAbsolutePath();
-
 		File folder = new File(dirPath + "/" + folderName);
 		if (!folder.exists()){
 			folder.mkdirs();
@@ -72,42 +70,12 @@ public class ResourceUtil {
 		copyInputStreamToFile(path, file);
 	}
 
-	public static InputStream readFromJar(String jarPath, String file) throws IOException {
-		JarURLConnection jarURLConnection=null;
-		InputStream inputStream;
-		try {
-			URL fileUrl= ParseUtil.fileToEncodedURL(new File(jarPath));
-			URL jarUrl = new URL("jar", "", -1, fileUrl + "!/");
-			URL moduleUrl = new URL(jarUrl, ParseUtil.encodePath(file, false));
-			jarURLConnection = (JarURLConnection)moduleUrl.openConnection();
-			inputStream = jarURLConnection.getInputStream();
-		} catch (IOException e) {
-			throw e;
-		} finally {
-			if (jarURLConnection!=null){
-				try {
-					jarURLConnection.getJarFile().close();
-				} catch (IOException ignore) {
-					throw ignore;
-				}
-			}
-		}
-
-		return inputStream;
-	}
-
 	private static void copyInputStreamToFile(InputStream inputStream, File file)
 			throws IOException {
 		try (OutputStream  outputStream = Files.newOutputStream(file.toPath())) {
 			FileCopyUtils.copy(inputStream, outputStream);
 		}
 	}
-
-	public static InputStream resourceLoader(String fileFullPath) throws IOException {
-		ResourceLoader resourceLoader = new DefaultResourceLoader();
-		return resourceLoader.getResource(fileFullPath).getInputStream();
-	}
-
 
 	private static File generateFolderInTempFolder(String subFolder) {
 		if (StringUtils.isEmpty(subFolder)) {
@@ -132,14 +100,37 @@ public class ResourceUtil {
 		return file;
 	}
 
-	public static Set<Class<?>> findClassesByJar(String jarFile) throws  IOException {
-		log.info("=======>>>>>>>>>>>>>>jarFile>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + jarFile);
+	public static Set<Class> findClassesByJar(String pathToJar) throws IOException, ClassNotFoundException {
+		JarFile jarFile = new JarFile(pathToJar);
+		Enumeration<JarEntry> e = jarFile.entries();
+
+		URL[] urls = { new URL("jar:file:" + jarFile + "!/") };
+		URLClassLoader cl = URLClassLoader.newInstance(urls);
+
+		Set<Class> classes = new HashSet<>();
+		while (e.hasMoreElements()) {
+			JarEntry jarEntry = e.nextElement();
+			if (jarEntry.isDirectory() || !jarEntry.getName().endsWith(".class")) {
+				continue;
+			}
+
+			// -6 because of .class
+			String className = jarEntry.getName().substring(0, jarEntry.getName().length() - 6);
+			className = className.replace('/', '.');
+			Class c = cl.loadClass(className);
+			classes.add(c);
+		}
+
+		return classes;
+	}
+
+	public static void copyClassToDir(String jarFile) throws  IOException {
 		JarFile jar = new JarFile(jarFile);
-		log.info("=======>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + jar);
 		java.util.Enumeration enumEntries = jar.entries();
-		Set<Class<?>> classes = new HashSet<>();
 		while (enumEntries.hasMoreElements()) {
 			java.util.jar.JarEntry file = (java.util.jar.JarEntry) enumEntries.nextElement();
+
+			//Nedd set temp folder
 			java.io.File f = new java.io.File(DEFAULT_TMP_DIR_PATH + "/" + file.getName());
 			if (file.isDirectory()) {
 				// if its a directory, create it
@@ -159,6 +150,5 @@ public class ResourceUtil {
 			is.close();
 		}
 
-		return classes;
 	}
 }
