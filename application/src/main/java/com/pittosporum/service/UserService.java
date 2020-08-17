@@ -1,6 +1,5 @@
 package com.pittosporum.service;
 
-import com.pittosporum.constant.ProcessResponse;
 import com.pittosporum.dto.UserDto;
 
 /**
@@ -8,6 +7,6 @@ import com.pittosporum.dto.UserDto;
  */
 
 public interface UserService {
-    ProcessResponse<UserDto> login(String name, String pwd);
+    UserDto login(String name);
 
 }

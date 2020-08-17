@@ -11,7 +11,7 @@ public enum AppErrorCode implements ErrorCode {
     DUPLICATE_RECORD("B0002", "This record already exists in the system."),
     EMPTY_OBJECT("B0003", "empty object"),
     FORMAT_SQL_ERROR("B0004", "an error occurred while format the sql"),
-    USER_NOT_EXIST("B0005", "the user  does not exist"),
+    USER_NOT_EXIST("B0005", "the user does not exist"),
     PASSWORD_ERROR("B0006", "password wrong"),
     PARAM_ERROR("B0007", "param has error"),
     NOT_LOGIN("B0008", "not login system"),

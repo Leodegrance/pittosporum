@@ -1,12 +1,21 @@
 package com.pittosporum.initializer;
 
+import com.pittosporum.batchjob.JobHandlerMapper;
+import com.pittosporum.entity.DataBaseProfile;
+import com.pittosporum.util.ProfileMapper;
 import com.pittosporum.utils.CommonLoader;
+import com.pittosporum.utils.JDBCTemplateMapper;
+import com.pittosporum.xmlsql.XmlSQLMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -22,9 +31,7 @@ public class AppInitializer implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         log.info("AppLoader start........");
 
-        CommonLoader.copyFolderToDir();
-
-        /*CommonLoader.loadXmlTemplateToMap();
+        CommonLoader.loadXmlTemplateToMap();
 
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "searchProfile");
 
@@ -34,7 +41,7 @@ public class AppInitializer implements InitializingBean {
 
         JDBCTemplateMapper.initJDBCTemplateMapper(dataBaseProfiles.stream().map(DataBaseProfile::getProfileName).collect(Collectors.toList()));
 
-        JobHandlerMapper.scanClass("application/src/main/java/com/pittosporum/batchjob");
-        log.info("AppLoader end........");*/
+        JobHandlerMapper.scanClass("com.pittosporum.batchjob");
+        log.info("AppLoader end........");
     }
 }

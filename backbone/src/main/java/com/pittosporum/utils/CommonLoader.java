@@ -25,14 +25,7 @@ public final class CommonLoader {
     private static final String BATCH_JOB_FOLDER_PATH = "/application/src/main/java/com/pittosporum/batchjob";
 
     public static void copyFolderToDir(){
-        try {
-           /* ResourceUtil.copyFileToDir(SQL_TEMPLATE_FOLDER_PATH, "quartzSqlTemplate.xml");
-            ResourceUtil.copyFileToDir(SQL_TEMPLATE_FOLDER_PATH, "storeSqlTemplate.xml");
-            ResourceUtil.copyFileToDir(SQL_TEMPLATE_FOLDER_PATH, "userSqlTemplate.xml");*/
-            ResourceUtil.findClassesByJar("D:\\workspace\\pittosporum\\application\\target\\pittosporum.jar");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public static void loadXmlTemplateToMap() throws IOException, ParserConfigurationException, SAXException {

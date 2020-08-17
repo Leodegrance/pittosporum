@@ -1,5 +1,7 @@
 package com.pittosporum.utils;
 
+import org.springframework.util.StringUtils;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -23,6 +25,10 @@ public class CommonUtil {
         }else {
             return false;
         }
+    }
+
+    public static boolean isEmpty(String str){
+        return StringUtils.isEmpty(str);
     }
 
     public static boolean equalsClass(Object instance, Class<?> owner){

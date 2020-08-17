@@ -1,6 +1,7 @@
 package com.pittosporum.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,11 +12,16 @@ import javax.servlet.http.HttpServletResponse;
  * @author yichen(graffitidef @ gmail.com)
  */
 @Slf4j
+@Component
 public class SecurityInterceptor implements HandlerInterceptor {
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         log.info("=======>>>>>>>preHandle>>>>>>>>>>>>>>>>>");
+        if(request.getMethod().equals("OPTIONS")){
+            response.setStatus(HttpServletResponse.SC_OK);
+            return true;
+        }
+
         return true;
     }
 

@@ -1,11 +1,8 @@
 package com.pittosporum.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
-import sun.net.www.ParseUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
-import java.net.URLClassLoader;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -100,28 +97,74 @@ public class ResourceUtil {
 		return file;
 	}
 
-	public static Set<Class> findClassesByJar(String pathToJar) throws IOException, ClassNotFoundException {
-		JarFile jarFile = new JarFile(pathToJar);
-		Enumeration<JarEntry> e = jarFile.entries();
+	public static Set<Class<?>> searchClass(String basePackage) throws IOException, ClassNotFoundException {
+		Set<Class<?>> set = new HashSet<>();
+		Enumeration<URL> urlEnumeration = Thread.currentThread().getContextClassLoader().getResources(basePackage.replace(".", "/"));
+		while (urlEnumeration.hasMoreElements()) {
+			URL url = urlEnumeration.nextElement();
+			String protocol = url.getProtocol();
+			if ("file".equals(protocol)){
+				String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
+				searchClassFromFile(basePackage, filePath, set);
+			}else if ("jar".equals(protocol)){
+				JarFile jar = ((JarURLConnection) url.openConnection()).getJarFile();
+				searchClassFromJar(basePackage, jar, set);
+			}
+		}
+		return set;
+	}
 
-		URL[] urls = { new URL("jar:file:" + jarFile + "!/") };
-		URLClassLoader cl = URLClassLoader.newInstance(urls);
+	public static void searchClassFromFile(String pkgName, String pkgPath, Set<Class<?>> classes) throws ClassNotFoundException {
+		File dir = new File(pkgPath);
+		if (!dir.exists() || !dir.isDirectory()) {
+			return;
+		}
 
-		Set<Class> classes = new HashSet<>();
-		while (e.hasMoreElements()) {
-			JarEntry jarEntry = e.nextElement();
-			if (jarEntry.isDirectory() || !jarEntry.getName().endsWith(".class")) {
+		File[] listFiles = dir.listFiles(pathname -> !pathname.isDirectory() || pathname.getName().endsWith("class"));
+
+		if (listFiles == null || listFiles.length == 0) {
+			return;
+		}
+
+		for (File f : listFiles) {
+			String className = f.getName();
+			className = className.substring(0, className.length() - 6);
+
+			Class clz = loadClass(pkgName + "." + className);
+			if (clz != null) {
+				classes.add(clz);
+			}
+		}
+	}
+
+	private static void searchClassFromJar(String pkgName, JarFile jar, Set<Class<?>> classes) throws ClassNotFoundException {
+		String pkgDir = pkgName.replace(".", "/");
+		Enumeration<JarEntry> entry = jar.entries();
+		while (entry.hasMoreElements()) {
+			JarEntry jarEntry = entry.nextElement();
+			String name = jarEntry.getName();
+			if (name.charAt(0) == '/') {
+				name = name.substring(1);
+			}
+			
+			if (jarEntry.isDirectory() || !name.startsWith(pkgDir) || !name.endsWith(".class")) {
 				continue;
 			}
 
-			// -6 because of .class
-			String className = jarEntry.getName().substring(0, jarEntry.getName().length() - 6);
-			className = className.replace('/', '.');
-			Class c = cl.loadClass(className);
-			classes.add(c);
+			String className = name.substring(0, name.length() - 6);
+			Class<?> clz = loadClass(className.replace("/", "."));
+			if (clz != null) {
+				classes.add(clz);
+			}
 		}
+	}
 
-		return classes;
+	private static Class<?> loadClass(String fullClzName) throws ClassNotFoundException{
+		try {
+			return Thread.currentThread().getContextClassLoader().loadClass(fullClzName);
+		} catch (ClassNotFoundException e) {
+			throw e;
+		}
 	}
 
 	public static void copyClassToDir(String jarFile) throws  IOException {
