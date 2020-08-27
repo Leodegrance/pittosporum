@@ -31,6 +31,8 @@ public class AppInitializer implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         log.info("AppLoader start........");
 
+        CommonLoader.copyFolderToDir();
+
         CommonLoader.loadXmlTemplateToMap();
 
         String sql = XmlSQLMapper.receiveSql("storeCatalog", "searchProfile");

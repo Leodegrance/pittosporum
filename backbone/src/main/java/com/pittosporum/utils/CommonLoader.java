@@ -4,6 +4,9 @@ import com.pittosporum.xmlsql.XmlSQLMapper;
 import com.pittosporum.xmlsql.XmlSQLParse;
 import com.pittosporum.xmlsql.XmlSQLTemplate;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.xml.sax.SAXException;
 
@@ -22,16 +25,27 @@ import java.util.stream.Collectors;
 @Slf4j
 public final class CommonLoader {
     private static final String SQL_TEMPLATE_FOLDER_PATH = "sqlTemplate";
-    private static final String BATCH_JOB_FOLDER_PATH = "/application/src/main/java/com/pittosporum/batchjob";
 
     public static void copyFolderToDir(){
+        try {
+            String current = System.getProperty("java.class.path");
+            log.info("current ----->>>>>" + current);
+            Resource[] resources = new PathMatchingResourcePatternResolver().getResources(ResourceUtils.CLASSPATH_URL_PREFIX
+                    + "/sqlTemplate/**/*.xml");
 
+            for (Resource resource : resources){
+                log.info("resources ----->>>>>" + resource);
+                String filename = resource.getFilename();
+                ResourceUtil.copyFileToDir(SQL_TEMPLATE_FOLDER_PATH, filename);
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     public static void loadXmlTemplateToMap() throws IOException, ParserConfigurationException, SAXException {
-        ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
-        if (currentClassLoader != null) {
-            String rootPath = currentClassLoader.getResource(SQL_TEMPLATE_FOLDER_PATH).getPath();
+            log.info("xml template path " + ResourceUtil.DEFAULT_TMP_DIR_PATH + "/" + SQL_TEMPLATE_FOLDER_PATH);
+            String rootPath = ResourceUtil.DEFAULT_TMP_DIR_PATH + "/" + SQL_TEMPLATE_FOLDER_PATH;
             File file = new File(rootPath);
             if (file == null) {
                 return;
@@ -59,6 +73,5 @@ public final class CommonLoader {
 
             log.info("catalogMap=======>>>>>>>>>>>>>>>." + catalogMap);
             XmlSQLMapper.initDynamicSqlTemplate(catalogMap);
-        }
     }
 }
