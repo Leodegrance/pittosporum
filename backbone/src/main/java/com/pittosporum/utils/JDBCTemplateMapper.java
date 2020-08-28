@@ -59,9 +59,9 @@ public final class JDBCTemplateMapper {
         DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getBeanFactory();
         for (Map.Entry<String, List<Properties>> entry : listMap.entrySet()) {
             String sourceName = entry.getKey();
-            List<Properties> propertieList = entry.getValue();
+            List<Properties> list = entry.getValue();
             ComboPooledDataSource dataSource = new ComboPooledDataSource();
-            for (Properties ele : propertieList) {
+            for (Properties ele : list) {
                 String key = ele.getKey();
                 String val = ele.getValue();
                 if ("driverClass".equals(key)) {
