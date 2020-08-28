@@ -122,6 +122,12 @@
                 <version>3.10.3</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.microsoft.sqlserver</groupId>
+                <artifactId>mssql-jdbc</artifactId>
+                <version>7.3.0.jre8-preview</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/net.sf.oval/oval -->
             <dependency>
                 <groupId>net.sf.oval</groupId>

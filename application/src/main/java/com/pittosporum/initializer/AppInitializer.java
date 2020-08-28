@@ -1,21 +1,18 @@
 package com.pittosporum.initializer;
 
 import com.pittosporum.batchjob.JobHandlerMapper;
-import com.pittosporum.entity.DataBaseProfile;
-import com.pittosporum.util.ProfileMapper;
 import com.pittosporum.utils.CommonLoader;
 import com.pittosporum.utils.JDBCTemplateMapper;
-import com.pittosporum.xmlsql.XmlSQLMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import java.beans.PropertyVetoException;
 
 /**
  * @author yichen(graffitidef @ gmail.com)
@@ -23,27 +20,28 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class AppInitializer implements InitializingBean {
+public class AppInitializer{
     @Autowired
     @Qualifier("appJdbcTemplate")
     private JdbcTemplate appJdbcTemplate;
 
-    public void afterPropertiesSet() throws Exception {
+    @Resource
+    private ApplicationContext context;
+
+    @PostConstruct
+    public void initMethod() throws Exception {
         log.info("AppLoader start........");
 
         CommonLoader.copyFolderToDir();
 
         CommonLoader.loadXmlTemplateToMap();
 
-        String sql = XmlSQLMapper.receiveSql("storeCatalog", "searchProfile");
-
-        List<DataBaseProfile> dataBaseProfiles = appJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(DataBaseProfile.class));
-
-        ProfileMapper.initProfileMap(dataBaseProfiles);
-
-        JDBCTemplateMapper.initJDBCTemplateMapper(dataBaseProfiles.stream().map(DataBaseProfile::getProfileName).collect(Collectors.toList()));
-
         JobHandlerMapper.scanClass("com.pittosporum.batchjob");
         log.info("AppLoader end........");
+    }
+
+    @PostConstruct
+    private void initCustomDataSource() throws PropertyVetoException {
+        JDBCTemplateMapper.initJDBCTemplateMapper(context, appJdbcTemplate);
     }
 }

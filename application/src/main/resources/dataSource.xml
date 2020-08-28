@@ -12,17 +12,5 @@
         <bean id="yamlProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">
             <property name="resources" value="classpath:application.properties"/>
         </bean>
-
-        <bean id="worldDataSource" name="worldDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-            <property name="driverClass" value="${define-data-source.world.driverClass}"></property>
-            <property name="jdbcUrl" value="${define-data-source.world.jdbcUrl}"/>
-            <property name="user" value="${define-data-source.world.user}"/>
-            <property name="password" value="${define-data-source.world.pwd}"/>
-        </bean>
-
-        <bean id="worldJdbcTemplate" name="worldJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-            <property name="dataSource" ref="worldDataSource"></property>
-        </bean>
-
     </beans>
 </beans>

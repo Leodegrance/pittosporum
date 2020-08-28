@@ -38,7 +38,6 @@ CREATE TABLE `profile` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10002 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
 -- app_store.qrtz_calendars definition
 
 CREATE TABLE `qrtz_calendars` (
@@ -271,3 +270,20 @@ CREATE TABLE `qrtz_simprop_triggers` (
   PRIMARY KEY (`sched_name`,`trigger_name`,`trigger_group`),
   CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- Drop table
+
+-- DROP TABLE iaismstr.dbo.properties GO
+
+CREATE TABLE iaismstr.dbo.properties (
+	ID uniqueidentifier DEFAULT newsequentialid() NOT NULL,
+	APPLICATION nvarchar(100) COLLATE Latin1_General_CI_AI NOT NULL,
+	PROFILE nvarchar(100) COLLATE Latin1_General_CI_AI NOT NULL,
+	LABEL nvarchar(100) COLLATE Latin1_General_CI_AI NOT NULL,
+	[KEY] nvarchar(510) COLLATE Latin1_General_CI_AI NOT NULL,
+	VALUE nvarchar(8000) COLLATE Latin1_General_CI_AI NOT NULL,
+	CONSTRAINT PK__properti__3214EC270D560F95 PRIMARY KEY (ID),
+	CONSTRAINT PROPERTIES_UN UNIQUE (APPLICATION,PROFILE,LABEL,[KEY])
+) GO
+CREATE UNIQUE INDEX PROPERTIES_UN ON iaismstr.dbo.properties (APPLICATION,PROFILE,LABEL,[KEY]) GO;
