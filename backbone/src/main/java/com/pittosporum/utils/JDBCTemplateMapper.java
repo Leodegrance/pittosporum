@@ -1,18 +1,15 @@
 package com.pittosporum.utils;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.pittosporum.entity.Properties;
 import com.pittosporum.exception.BaseRunException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.StringUtils;
 
 import java.beans.PropertyVetoException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,50 +32,34 @@ public final class JDBCTemplateMapper {
             return;
         }
 
-        List<Properties> properties = appJdbcTemplate.query("select application as applicationname, profile, label, `key`, " +
-                "value from properties where label = 'datasource'", new BeanPropertyRowMapper<>(Properties.class));
+        List<Map<String, Object>> queryForList = appJdbcTemplate.queryForList("SELECT application, " +
+                " MAX( CASE `key` WHEN 'driverClass' THEN value END) driver_class, MAX( CASE `key` WHEN 'jdbcUrl' THEN value END ) jdbc_url, MAX( CASE `key` WHEN 'user' THEN value END ) `user`, MAX( CASE `key` WHEN 'password' THEN value END ) `password` " +
+                " FROM properties where label = 'datasource' GROUP by application;");
 
-        if (CommonUtil.isEmpty(properties)){
+        if (CommonUtil.isEmpty(queryForList)){
             return;
-        }
-
-        Map<String, List<Properties>> listMap =  new HashMap<>();
-        for (Properties ele : properties){
-            String key = ele.getApplicationName();
-            List<Properties> list = listMap.get(key);
-            if (list == null || list.isEmpty()){
-                list = new ArrayList();
-                list.add(ele);
-                listMap.put(key, list);
-            }else {
-                list.add(ele);
-            }
         }
 
         ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) context;
         DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getBeanFactory();
-        for (Map.Entry<String, List<Properties>> entry : listMap.entrySet()) {
-            String sourceName = entry.getKey();
-            List<Properties> list = entry.getValue();
+
+        for (Map<String, Object> map : queryForList){
+            String application = (String) map.get("application");
+            String driverClass = (String) map.get("driver_class");
+            String jdbcUrl = (String) map.get("jdbc_url");
+            String user = (String) map.get("user");
+            String password = (String) map.get("password");
+
             ComboPooledDataSource dataSource = new ComboPooledDataSource();
-            for (Properties ele : list) {
-                String key = ele.getKey();
-                String val = ele.getValue();
-                if ("driverClass".equals(key)) {
-                    dataSource.setDriverClass(val);
-                } else if ("jdbcUrl".equals(key)) {
-                    dataSource.setJdbcUrl(val);
-                } else if ("password".equals(key)) {
-                    dataSource.setPassword(val);
-                } else if ("user".equals(key)) {
-                    dataSource.setUser(val);
-                }
-            }
+            dataSource.setDriverClass(driverClass);
+            dataSource.setJdbcUrl(jdbcUrl);
+            dataSource.setUser(user);
+            dataSource.setPassword(password);
 
             JdbcTemplate jdbcTemplate = new JdbcTemplate();
             jdbcTemplate.setDataSource(dataSource);
-            String datasourceName = sourceName + DATASOURCE_BEAN_NAME_SUFFIX;
-            String jdbcBeanName = sourceName + JDBC_BEAN_NAME_SUFFIX;
+            String datasourceName = application + DATASOURCE_BEAN_NAME_SUFFIX;
+            String jdbcBeanName = application + JDBC_BEAN_NAME_SUFFIX;
             defaultListableBeanFactory.registerSingleton(datasourceName, dataSource);
             defaultListableBeanFactory.registerSingleton(jdbcBeanName, jdbcTemplate);
             jdbcTemplateMap.put(jdbcBeanName, jdbcTemplate);

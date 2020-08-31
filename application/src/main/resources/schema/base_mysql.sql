@@ -272,18 +272,12 @@ CREATE TABLE `qrtz_simprop_triggers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- Drop table
+CREATE TABLE `properties` (
+  `application` varchar(25) NOT NULL,
+  `profile` varchar(100) NOT NULL,
+  `label` varchar(100) NOT NULL,
+  `key` varchar(510) NOT NULL,
+  `value` varchar(8000) NOT NULL,
+  PRIMARY KEY (`application`,`profile`,`label`,`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- DROP TABLE iaismstr.dbo.properties GO
-
-CREATE TABLE iaismstr.dbo.properties (
-	ID uniqueidentifier DEFAULT newsequentialid() NOT NULL,
-	APPLICATION nvarchar(100) COLLATE Latin1_General_CI_AI NOT NULL,
-	PROFILE nvarchar(100) COLLATE Latin1_General_CI_AI NOT NULL,
-	LABEL nvarchar(100) COLLATE Latin1_General_CI_AI NOT NULL,
-	[KEY] nvarchar(510) COLLATE Latin1_General_CI_AI NOT NULL,
-	VALUE nvarchar(8000) COLLATE Latin1_General_CI_AI NOT NULL,
-	CONSTRAINT PK__properti__3214EC270D560F95 PRIMARY KEY (ID),
-	CONSTRAINT PROPERTIES_UN UNIQUE (APPLICATION,PROFILE,LABEL,[KEY])
-) GO
-CREATE UNIQUE INDEX PROPERTIES_UN ON iaismstr.dbo.properties (APPLICATION,PROFILE,LABEL,[KEY]) GO;
