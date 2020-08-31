@@ -9,6 +9,8 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/application/pom.xml" />
+        <option value="$PROJECT_DIR$/backbone/pom.xml" />
         <option value="$PROJECT_DIR$/systemadmin/pom.xml" />
       </set>
     </option>
