@@ -23,8 +23,8 @@ import java.util.Map;
  */
 
 @Slf4j
-public class JsonUtil {
-    private JsonUtil() {
+public class JSONUtil {
+    private JSONUtil() {
     }
 
     private static ObjectMapper mapper;
